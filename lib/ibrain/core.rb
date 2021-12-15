@@ -12,25 +12,8 @@ require 'cancan'
 require 'friendly_id'
 require 'kaminari/activerecord'
 require 'activerecord/session_store'
-require 'rails-dotenv'
-require 'rubocop'
-require 'rubocop-performance'
-require 'rubocop-rails'
-
-if ENV['GRAPHQL_ENABLE']
-  require 'search_object/plugin/graphql'
-  require 'graphql/query_resolver'
-end
-
-case ENV['DATABASE_ADAPTER']
-when /sqlite/
-  require 'sqlite3'
-  require 'fast_sqlite'
-when /postgres/
-  require 'pg'
-else
-  require 'mysql2'
-end
+require 'rack/cors'
+require 'gem/release'
 
 module Ibrain
   mattr_accessor :user_class

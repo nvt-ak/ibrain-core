@@ -21,48 +21,6 @@ module Ibrain
 
       attr_reader :current_user, :params
 
-      def decode_attributes(attributes)
-        attributes.each_key do |k|
-          v = attributes[k]
-
-          if k.include?('attributes')
-            unless v.is_a?(Array)
-              attributes[k] = decode_attributes(v)
-
-              next
-            end
-
-            attributes[k] = v.map do |e_attributes|
-              decode_attributes(e_attributes)
-            end
-          end
-
-          next unless k.include?('id')
-
-          if v.is_a?(Array)
-            attributes[k] = v.map do |e_value|
-              _, item_id = ::GraphQL::Schema::UniqueWithinType.decode(e_value)
-
-              item_id
-            end
-
-            next
-          end
-
-          next unless v.is_a?(String)
-
-          _, item_id = ::GraphQL::Schema::UniqueWithinType.decode(v)
-
-          attributes[k] = item_id
-        end
-
-        attributes
-      end
-
-      def graphql_encode(type_definition, object)
-        GraphQL::Schema::UniqueWithinType.encode(type_definition.name, object.try(:id))
-      end
-
       def object_from_id(id)
         _, item_id = GraphQL::Schema::UniqueWithinType.decode(id)
 

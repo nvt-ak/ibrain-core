@@ -27,32 +27,7 @@ class Ibrain::Resolvers::BaseQuery
 
   def normalize_filters(value, _branches)
     return {} if value.blank?
-
-    value.each_key do |k|
-      v = value[k]
-
-      next if k.include?('user_id')
-      next unless k.include?('id')
-
-      if v.is_a?(Array)
-        value[k] = v.map do |e_value|
-          _, item_id = GraphQL::Schema::UniqueWithinType.decode(e_value)
-
-          item_id
-        rescue StandardError
-          e_value
-        end
-
-        next
-      end
-
-      next unless v.is_a?(String)
-
-      _, item_id = GraphQL::Schema::UniqueWithinType.decode(v)
-
-      value[k] = item_id
-    end
-
+    
     value
   end
 

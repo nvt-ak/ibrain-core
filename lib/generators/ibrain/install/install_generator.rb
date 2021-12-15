@@ -9,8 +9,11 @@ module Ibrain
 
     class_option :user_class, type: :string
     class_option :with_authentication, type: :boolean, default: true
+    class_option :with_rubocop, type: :boolean, default: true
+    class_option :with_graphql, type: :boolean, default: false
+    class_option :with_annotation, type: :boolean, default: true
+    class_option :with_sendgrid, type: :boolean, default: false
     class_option :enforce_available_locales, type: :boolean, default: nil
-    class_option :with_rubocop, type: :boolean, default: false
 
     def self.source_paths
       paths = superclass.source_paths
@@ -22,8 +25,9 @@ module Ibrain
 
     def add_files
       template 'config/initializers/ibrain.rb.tt', 'config/initializers/ibrain.rb'
-      template 'config/puma.rb.tt', 'config/puma.rb'
-      template 'config/database.tt', 'config/database.yml'
+      template 'config/initializers/cors.tt', 'config/initializers/cors.rb'
+      template 'config/puma.tt', 'config/puma.rb'
+      # template 'config/database.tt', 'config/database.yml'
       template '.rubocop.yml.tt', '.rubocop.yml' if options[:with_rubocop]
     end
 
@@ -70,11 +74,11 @@ module Ibrain
     def install_auth_plugin
       if options[:with_authentication] && (options[:auto_accept] || !no?("
         Ibrain has a default authentication extension that uses Devise.
-        You can find more info at https://gitlab.com/its-global/ibrain/ruby/ibrain-auth.
+        You can find more info at https://github.com/john-techfox/ibrain-auth.git.
 
         Would you like to install it? (Y/n)"))
 
-        @plugins_to_be_installed << 'ibrain-auth' unless is_installed_auth_gem?
+        @plugins_to_be_installed << 'ibrain-auth' unless system('gem list | grep ibrain-auth')
         @plugin_generators_to_run << 'ibrain:auth:install'
       end
     end
@@ -83,6 +87,24 @@ module Ibrain
       @plugins_to_be_installed.each do |plugin_name|
         gem plugin_name
       end
+
+      if options[:with_rubocop]
+        append_gem('rubocop', '1.23.0', 'development')
+        append_gem('rubocop-performance', '1.12.0', 'development')
+        append_gem('rubocop-rails', '2.12.4', 'development')
+      end
+        
+      if options[:with_graphql]
+        append_gem('graphql', '1.13.1')
+        append_gem('graphql-batch', '0.4.3')
+        append_gem('graphql-guard', '2.0.0')
+        append_gem('graphql-rails-generators', '1.1.2', 'development')
+        append_gem('graphiql-rails', '1.8.0', 'development')
+      end
+
+      append_gem('annotate', '3.1.1', 'development') if options[:with_annotation]
+      append_gem('sendgrid-ruby', '6.6.0') if options[:with_sendgrid]
+      append_gem('ridgepole', '0.9.6', 'development') if options[:with_ridgepole]
 
       bundle_cleanly{ run "bundle install" } if @plugins_to_be_installed.any?
       run "spring stop" if defined?(Spring)
@@ -133,8 +155,13 @@ module Ibrain
       Bundler.respond_to?(:with_unbundled_env) ? Bundler.with_unbundled_env(&block) : Bundler.with_clean_env(&block)
     end
 
-    def is_installed_auth_gem?
-      File.read(Rails.root.join('Gemfile')).include?('ibrain-auth')
+    def append_gem(name, version, group_name = nil)
+      shell_command = [ "\ngem '#{name}', '~> #{version}'"]
+      shell_command.push("group: :#{group_name}") if group_name.present?
+      string_command = shell_command.join(', ')
+      grep_command = "gem list | grep '#{name} (#{version})'"
+
+      system( `echo "#{string_command}" >> Gemfile` ) unless system(grep_command)
     end
   end
 end

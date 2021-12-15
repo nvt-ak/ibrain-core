@@ -27,7 +27,7 @@ class Ibrain::Resolvers::BaseQuery
 
   def normalize_filters(value, _branches)
     return {} if value.blank?
-    
+
     value
   end
 

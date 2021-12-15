@@ -37,7 +37,7 @@ module Ibrain
         end
 
         def not_authorized_handler(type, field)
-          RULES.dig(type, field, :not_authorized) || RULES.dig(type, :'*', :not_authorized)
+          RULES.dig(type, field, :not_authorized) || RULES.dig(type, :*, :not_authorized)
         end
       end
     end

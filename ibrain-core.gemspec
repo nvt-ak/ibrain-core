@@ -21,14 +21,12 @@ Gem::Specification.new do |spec|
   spec.add_dependency "awesome_nested_set", '~> 3.4.0'
   spec.add_dependency "cancancan", "~> 1.15.0"
   spec.add_dependency "friendly_id", "~> 5.4.2"
+  spec.add_dependency "gem-release", '~> 2.2.2'
   spec.add_dependency "kaminari", "~> 1.2.1"
   spec.add_dependency 'rack-cors', '~> 1.1.1'
   spec.add_dependency "rails", "~> 6.1.4", ">= 6.1.4.1"
   spec.add_dependency 'ransack', '~> 2.4.2'
-
-  spec.add_dependency 'gem-release', '~> 2.2.2'
-  spec.add_development_dependency 'i18n-tasks', '~> 0.9'
-  spec.add_development_dependency 'rubocop', '~> 1.23.0'
-  spec.add_development_dependency 'rubocop-performance', '~> 1.12.0'
-  spec.add_development_dependency 'rubocop-rails', '~> 2.12.4'
+  spec.metadata = {
+    'rubygems_mfa_required' => 'true'
+  }
 end

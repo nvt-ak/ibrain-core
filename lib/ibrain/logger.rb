@@ -12,7 +12,7 @@ module Ibrain
       end
 
       def debug(message)
-        Rails.logger.debug("[Ibrain] #{message}")
+        Rails.logger.debug { "[Ibrain] #{message}" }
       end
 
       def error(message)

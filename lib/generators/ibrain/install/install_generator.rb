@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'rails/generators'
+require 'ibrain/logger'
 
 module Ibrain
   # @private
@@ -21,14 +22,6 @@ module Ibrain
       paths << File.expand_path('../templates', "../#{__FILE__}")
       paths << File.expand_path('templates', __dir__)
       paths.flatten
-    end
-
-    def add_files
-      template 'config/initializers/ibrain.rb.tt', 'config/initializers/ibrain.rb'
-      template 'config/initializers/cors.tt', 'config/initializers/cors.rb'
-      template 'config/puma.tt', 'config/puma.rb'
-      # template 'config/database.tt', 'config/database.yml'
-      template '.rubocop.yml.tt', '.rubocop.yml' if options[:with_rubocop]
     end
 
     def additional_tweaks
@@ -93,7 +86,7 @@ module Ibrain
         append_gem('rubocop-performance', '1.12.0', 'development')
         append_gem('rubocop-rails', '2.12.4', 'development')
       end
-        
+
       if options[:with_graphql]
         append_gem('graphql', '1.13.1')
         append_gem('graphql-batch', '0.4.3')
@@ -105,6 +98,7 @@ module Ibrain
       append_gem('annotate', '3.1.1', 'development') if options[:with_annotation]
       append_gem('sendgrid-ruby', '6.6.0') if options[:with_sendgrid]
       append_gem('ridgepole', '0.9.6', 'development') if options[:with_ridgepole]
+      append_gem('rack-cors', '1.1.1')
 
       bundle_cleanly{ run "bundle install" } if @plugins_to_be_installed.any?
       run "spring stop" if defined?(Spring)
@@ -140,6 +134,13 @@ module Ibrain
       end
     end
 
+    def add_files
+      template 'config/initializers/ibrain.rb.tt', 'config/initializers/ibrain.rb'
+      template 'config/initializers/cors.tt', 'config/initializers/cors.rb'
+      template 'config/puma.tt', 'config/puma.rb'
+      template '.rubocop.yml.tt', '.rubocop.yml' if options[:with_rubocop]
+    end
+
     def complete
       unless options[:quiet]
         Ibrain::Logger.info "*" * 50
@@ -156,7 +157,7 @@ module Ibrain
     end
 
     def append_gem(name, version, group_name = nil)
-      shell_command = [ "\ngem '#{name}', '~> #{version}'"]
+      shell_command = ["\ngem '#{name}', '~> #{version}'"]
       shell_command.push("group: :#{group_name}") if group_name.present?
       string_command = shell_command.join(', ')
       grep_command = "gem list | grep '#{name} (#{version})'"

@@ -6,14 +6,13 @@ require "active_job/railtie"
 require "active_model/railtie"
 require "active_record/railtie"
 require "active_storage/engine"
+require 'activerecord/session_store'
 
 require 'awesome_nested_set'
 require 'cancan'
 require 'friendly_id'
 require 'kaminari/activerecord'
-require 'activerecord/session_store'
 require 'rack/cors'
-require 'gem/release'
 
 module Ibrain
   mattr_accessor :user_class
@@ -82,8 +81,5 @@ require 'ibrain/core/controller_helpers/auth'
 require 'ibrain/core/role_configuration'
 
 require 'ibrain/core/validators/email'
-require 'ibrain/permission_sets'
 require 'ibrain/user_class_handle'
 require 'ibrain/encryptor'
-
-require 'sendgrid-ruby' if /sendgrid/.match?(ENV['EMAIL_PROVIDER'])

@@ -142,17 +142,15 @@ module Ibrain
         return nil if value.nil?
 
         case type
-        when :string, :text
+        when :string, :text, :password
           value.to_s
         when :encrypted_string
           preference_encryptor.encrypt(value.to_s)
-        when :password
-          value.to_s
         when :decimal
           begin
             value.to_s.to_d
           rescue ArgumentError
-            BigDecimal(0)
+            BigDecimal('0')
           end
         when :integer
           value.to_i

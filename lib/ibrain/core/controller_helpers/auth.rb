@@ -20,9 +20,9 @@ module Ibrain
 
           class_attribute :fallback_on_unauthorized
           self.fallback_on_unauthorized = -> do
-            error = ::OpenStruct.new({
+            error = ::Struct.new(
               message: I18n.t('ibrain.authorization_failure')
-            })
+                                     )
 
             render_json_error(error, :unauthorized)
           end

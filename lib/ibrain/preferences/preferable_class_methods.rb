@@ -29,7 +29,7 @@ module Ibrain::Preferences
 
       default = begin
                   given = options[:default]
-                  if ancestors.include?(Ibrain::Preferences::Configuration) &&
+                  if self <= Ibrain::Preferences::Configuration &&
                      given.is_a?(Proc) &&
                      given.lambda? &&
                      given.arity.zero?

@@ -98,7 +98,6 @@ module Ibrain
       append_gem('annotate', '3.1.1', 'development') if options[:with_annotation]
       append_gem('sendgrid-ruby', '6.6.0') if options[:with_sendgrid]
       append_gem('ridgepole', '0.9.6', 'development') if options[:with_ridgepole]
-      append_gem('rack-cors', '1.1.1')
 
       bundle_cleanly{ run "bundle install" } if @plugins_to_be_installed.any?
       run "spring stop" if defined?(Spring)

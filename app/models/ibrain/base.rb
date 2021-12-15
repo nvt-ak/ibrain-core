@@ -36,7 +36,6 @@ class Ibrain::Base < ApplicationRecord
     time_ago_in_words(created_at)
   end
 
-
   # Provides a scope that should be included any time data
   # are fetched with the intention of displaying to the user.
   #

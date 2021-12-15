@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Ibrain
   class BaseSchema < GraphQL::Schema
     use GraphQL::Batch
@@ -41,7 +43,7 @@ module Ibrain
 
       item_id
     end
-    
+
     rescue_from(ActiveRecord::RecordNotFound) do |_err, _obj, _args, _ctx, field|
       # Raise a graphql-friendly error with a custom message
       raise GraphQL::ExecutionError, "#{field.type.unwrap.graphql_name} not found"

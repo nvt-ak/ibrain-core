@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-# rubocop:disable Metrics/BlockLength
 namespace :ridgepole do
   desc 'Apply database schema'
   task apply: :environment do
@@ -36,4 +35,3 @@ namespace :ridgepole do
     system [command + options].join(' ')
   end
 end
-# rubocop:enable Metrics/BlockLength

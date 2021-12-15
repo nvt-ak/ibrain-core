@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Ibrain
   class GraphqlController < Ibrain::BaseController
     def execute

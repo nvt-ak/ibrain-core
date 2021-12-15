@@ -58,7 +58,7 @@ module Ibrain::Preferences
                   else
                     proc { given }
                   end
-                end
+      end
 
       # The defined preferences on a class are all those defined directly on
       # that class as well as those defined on ancestors.

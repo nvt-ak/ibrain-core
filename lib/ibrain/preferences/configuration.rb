@@ -76,6 +76,7 @@ module Ibrain::Preferences
     # @!attribute preference_store
     # Storage method for preferences.
     attr_writer :preference_store
+
     def preference_store
       @preference_store ||= default_preferences
     end

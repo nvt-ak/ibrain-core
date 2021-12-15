@@ -13,16 +13,20 @@ require 'friendly_id'
 require 'kaminari/activerecord'
 require 'activerecord/session_store'
 require 'rails-dotenv'
+require 'rubocop'
+require 'rubocop-performance'
+require 'rubocop-rails'
 
 if ENV['GRAPHQL_ENABLE']
   require 'search_object/plugin/graphql'
   require 'graphql/query_resolver'
 end
 
-if /sqlite/.match?(ENV['DATABASE_ADAPTER'])
+case ENV['DATABASE_ADAPTER']
+when /sqlite/
   require 'sqlite3'
   require 'fast_sqlite'
-elsif /postgres/.match?(ENV['DATABASE_ADAPTER'])
+when /postgres/
   require 'pg'
 else
   require 'mysql2'
@@ -32,9 +36,10 @@ module Ibrain
   mattr_accessor :user_class
 
   def self.user_class
-    if @@user_class.is_a?(Class)
+    case @@user_class
+    when Class
       raise "Ibrain.user_class MUST be a String or Symbol object, not a Class object."
-    elsif @@user_class.is_a?(String) || @@user_class.is_a?(Symbol)
+    when String, Symbol
       @@user_class.to_s.constantize
     end
   end
@@ -67,13 +72,12 @@ module Ibrain
         File.exist?(Pathname.new(path).join(initializer_name))
       end
     end
-    
+
     private_class_method :does_ibrain_initializer_exist?
 
     class GatewayError < RuntimeError; end
   end
 end
-
 
 require "ibrain/core/version"
 

@@ -14,7 +14,6 @@ module Ibrain
       ActiveModel::Name.new Ibrain::LegacyUser, Ibrain, 'user'
     end
 
-    attr_accessor :password
-    attr_accessor :password_confirmation
+    attr_accessor :password, :password_confirmation
   end
 end

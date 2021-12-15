@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # ref: https://zenn.dev/necocoa/articles/setup-graphql-batch
 
 module Ibrain

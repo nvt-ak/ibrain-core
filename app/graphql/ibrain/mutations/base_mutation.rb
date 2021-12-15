@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Ibrain
   module Mutations
     class BaseMutation < GraphQL::Schema::RelayClassicMutation

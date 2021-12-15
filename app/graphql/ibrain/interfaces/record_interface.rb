@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Ibrain::Interfaces::RecordInterface
   include Ibrain::Types::BaseInterface
 

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Ibrain
   module Resolvers
     class BaseResolver < GraphQL::Schema::Resolver
@@ -28,5 +30,4 @@ module Ibrain
       end
     end
   end
-
 end

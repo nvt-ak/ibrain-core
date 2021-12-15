@@ -17,20 +17,25 @@ Gem::Specification.new do |spec|
 
   spec.files = Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.md"]
 
+  spec.add_dependency 'activerecord-session_store', '~> 1.0'
+  spec.add_dependency 'annotate', '~> 3.1.1'
   spec.add_dependency "awesome_nested_set", '~> 3.4.0'
   spec.add_dependency "cancancan", "~> 1.15.0"
   spec.add_dependency "friendly_id", "~> 5.4.2"
   spec.add_dependency "kaminari", "~> 1.2.1"
-  spec.add_dependency "rails", "~> 6.1.4", ">= 6.1.4.1"
   spec.add_dependency "puma", '~> 5.0'
   spec.add_dependency 'rack-cors', '~> 1.1.1'
+  spec.add_dependency "rails", "~> 6.1.4", ">= 6.1.4.1"
   spec.add_dependency 'ransack', '~> 2.4.2'
-  spec.add_dependency 'activerecord-session_store', '~> 1.0'
-  spec.add_dependency 'annotate', '~> 3.1.1'
-  spec.add_dependency 'dotenv', '~> 2.4'
 
-  spec.add_development_dependency 'dotenv-rails'
-  spec.add_development_dependency 'gem-that-requires-env-variables'
+  spec.add_development_dependency 'dotenv-rails', '~> 2.7.6'
+  spec.add_development_dependency 'gem-release', '~> 2.2.2'
+  spec.add_development_dependency 'i18n-tasks', '~> 0.9'
+  spec.add_development_dependency 'listen', '~> 3.3'
+  spec.add_development_dependency 'pry-rails', '~> 0.3.9'
+  spec.add_development_dependency 'rubocop', '~> 1.23.0'
+  spec.add_development_dependency 'rubocop-performance', '~> 1.12.0'
+  spec.add_development_dependency 'rubocop-rails', '~> 2.12.4'
 
   if ENV['GRAPHQL_ENABLE']
     spec.add_dependency 'graphql', '~> 1.13.1'
@@ -39,10 +44,11 @@ Gem::Specification.new do |spec|
     spec.add_dependency 'graphql-rails-generators', '~> 1.1.2'
   end
 
-  if /sqlite/.match?(ENV['DATABASE_ADAPTER'])
-    spec.add_dependency 'sqlite3'
+  case ENV['DATABASE_ADAPTER']
+  when /sqlite/
     spec.add_dependency 'fast_sqlite'
-  elsif /postgres/.match?(ENV['DATABASE_ADAPTER'])
+    spec.add_dependency 'sqlite3'
+  when /postgres/
     spec.add_dependency 'pg', '~> 1.1'
   else
     spec.add_dependency 'mysql2', '~> 0.5.2'

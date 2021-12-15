@@ -6,7 +6,7 @@ module Ibrain
     # @param key [String] the 256 bits signature key
     def initialize(key = Ibrain::Config.ibrain_encryptor_key)
       key = Rails.application.secrets.secret_key_base.byteslice(0..31) if key.blank?
-      
+
       @crypt = ActiveSupport::MessageEncryptor.new(key)
     end
 

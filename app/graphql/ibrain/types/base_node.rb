@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Ibrain::Types::BaseNode < Types::BaseObject
   implements ::GraphQL::Relay::Node.interface
   implements ::Ibrain::Interfaces::RecordInterface

@@ -137,6 +137,7 @@ module Ibrain
       template 'config/initializers/ibrain.rb.tt', 'config/initializers/ibrain.rb'
       template 'config/initializers/cors.tt', 'config/initializers/cors.rb'
       template 'config/puma.tt', 'config/puma.rb'
+      yml_template 'config/database.tt', 'config/database.yml'
       template '.rubocop.yml.tt', '.rubocop.yml' if options[:with_rubocop]
     end
 
@@ -162,6 +163,16 @@ module Ibrain
       grep_command = "gem list | grep '#{name} (#{version})'"
 
       system( `echo "#{string_command}" >> Gemfile` ) unless system(grep_command)
+    end
+
+    def yml_template(source, *args)
+      config = args.last.is_a?(Hash) ? args.pop : {}
+      destination = args.first || source.sub(/#{TEMPLATE_EXTNAME}$/o, "")
+      source = File.expand_path(find_in_source_paths(source.to_s))
+
+      create_file destination, nil, config do
+        File.read(source)
+      end
     end
   end
 end

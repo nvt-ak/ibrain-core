@@ -21,6 +21,11 @@ Or install it yourself as:
 $ gem install ibrain-core
 ```
 
+Please install plugin after install this gem
+```bash
+$ bundle exec rails generate ibrain:install
+```
+
 ## Contributing
 Contribution directions go here.
 

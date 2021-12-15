@@ -1,0 +1,23 @@
+default: &default
+  adapter: "<%= ENV.fetch("DATABASE_ADAPTER") { 'mysql2' } %>"
+  encoding: utf8mb4
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  host: <%= ENV.fetch('DATABASE_HOSTNAME') { 'localhost' }%>
+  username: <%= ENV.fetch('DATABASE_USERNAME') { 'ibrain' }%>
+  password: <%= ENV.fetch('DATABASE_PASSWORD') { 'ibrain-password' }%>
+
+development:
+  <<: *default
+  database: <%= ENV.fetch('DATABASE_NAME') { 'ibrain_development' }%>
+
+staging:
+  <<: *default
+  database: <%= ENV.fetch('DATABASE_NAME') { 'ibrain_staging' }%>
+
+test:
+  <<: *default
+  database: <%= ENV.fetch('DATABASE_NAME') { 'ibrain_test' }%>
+
+production:
+  <<: *default
+  database: <%= ENV.fetch('DATABASE_NAME') { 'ibrain_production' }%>

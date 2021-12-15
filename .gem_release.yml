@@ -1,0 +1,7 @@
+bump:
+  recurse: false
+  file: 'lib/ibrain/core/version.rb'
+  message: Bump ibrain-core to %{version}
+
+release:
+  recurse: true

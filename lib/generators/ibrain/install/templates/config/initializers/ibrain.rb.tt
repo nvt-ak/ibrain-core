@@ -1,0 +1,55 @@
+# Ibrain version defaults for preferences that are not overridden
+Ibrain.load_defaults '<%= Ibrain.ibrain_version %>'
+
+Ibrain.config do |config|
+  # Core:
+  # from address for emails
+  config.mails_from = "info@example.com"
+
+  # Uncomment to stop tracking inventory levels in the application
+  # config.track_inventory_levels = false
+
+  # When set, data caches are only invalidated when they fall below or rise
+  # above the inventory_cache_threshold that is set. Default is to invalidate cache on
+  # any inventory changes.
+  # config.inventory_cache_threshold = 3
+
+  # Defaults
+  # Permission Sets:
+
+  # Uncomment and customize the following line to add custom permission sets
+  # to a custom users role:
+  # config.roles.assign_permissions :role_name, ['Ibrain::PermissionSets::CustomPermissionSet']
+
+  # @!attribute [rw] guest_token_cookie_options
+  # @return [Hash] Add additional guest_token cookie options here (ie. domain or path)
+  # config.guest_token_cookie_options = {}
+
+  # @!attribute [rw] generate_api_key_for_all_roles
+  # @return [Boolean] Allow generating api key automatically for user
+  # at role_user creation for all roles. (default: +false+)
+  # config.generate_api_key_for_all_roles = false
+
+  # Graphql Policy Object
+  # config.graphql_policy = 'Ibrain::Policies::GraphqlPolicy'
+
+  # Api version for route config
+  # config.api_version = 'v1'
+
+  # Graphql Schema name
+  # config.graphql_schema = 'Ibrain::BaseSchema'
+
+  # Graphql Encryptor key
+  # config.ibrain_encryptor_key = Rails.application.secrets.secret_key_base.byteslice(0..31)
+end
+
+<% if defined?(Ibrain::Api::Engine) -%>
+  Ibrain::Api::Config.configure do |config|
+    # Localization
+    config.locale = 'en'
+
+    config.requires_authentication = true
+  end
+<% end -%>
+
+Ibrain.user_class = <%= (options[:user_class].blank? ? "Ibrain::LegacyUser" : options[:user_class]).inspect %>

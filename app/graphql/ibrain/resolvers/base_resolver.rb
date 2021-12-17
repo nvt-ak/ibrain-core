@@ -16,10 +16,6 @@ module Ibrain
       def collection
         Kernel.const_get(model)
       end
-
-      def model
-        self.class.type.of_type.name.demodulize.split('Type').first
-      end
     end
   end
 end

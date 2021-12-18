@@ -35,6 +35,15 @@ module Ibrain
       # find an object in your application
       # ...
     end
+
+    def self.field(*args, camelize: false, **kwargs, &block)
+      # if camelize == false
+      #   # Also make a camelized field:
+      #   field(*args, camelize: false, **kwargs, &block)
+      # end
+      super
+    end
+
     rescue_from(ActiveRecord::RecordNotFound) do |_err, _obj, _args, _ctx, field|
       # Raise a graphql-friendly error with a custom message
       raise GraphQL::ExecutionError, "#{field.type.unwrap.graphql_name} not found"

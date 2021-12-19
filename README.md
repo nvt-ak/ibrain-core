@@ -2,7 +2,7 @@
 This is core plugin for rails api project
 
 ## Usage
-How to use my plugin.
+Please remove puma gem from your project before add this gem
 
 ## Installation
 Add this line to your application's Gemfile:

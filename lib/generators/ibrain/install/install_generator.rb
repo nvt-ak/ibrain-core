@@ -137,7 +137,7 @@ module Ibrain
       template 'config/initializers/cors.tt', 'config/initializers/cors.rb', { skip: true }
       template 'config/puma.tt', 'config/puma.rb', { skip: true }
       yml_template 'config/database.tt', 'config/database.yml', { skip: true }
-      template '.rubocop.yml.tt', '.rubocop.yml', { skip: true } if options[:with_rubocop]
+      template 'rubocop.yml.tt', '.rubocop.yml', { skip: true } if options[:with_rubocop]
 
       if options[:with_graphql]
         template 'graphql/app_schema.rb.tt', 'app/graphql/app_schema.rb', { skip: true }

@@ -1,8 +1,10 @@
-ibrain:
-  system:
-    message:
-      success: Fetch data successful
-  errors:
-    session:
-      invalid_session: Login session is invalid. Please try again!
-      expired_session: Login session is expired.
+jp:
+  ibrain:
+    system:
+      message:
+        success: Fetch data successful
+        ok: Fetch data successful
+    errors:
+      session:
+        invalid_session: Login session is invalid. Please try again!
+        expired_session: Login session is expired.

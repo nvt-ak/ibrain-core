@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Ibrain::Base < ApplicationRecord
+class Ibrain::Base < Ibrain::ApplicationRecord
   include ActionView::Helpers::DateHelper
 
   self.abstract_class = true

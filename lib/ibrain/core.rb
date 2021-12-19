@@ -13,6 +13,7 @@ require 'cancan'
 require 'friendly_id'
 require 'kaminari/activerecord'
 require 'rack/cors'
+require 'ransack'
 
 module Ibrain
   mattr_accessor :user_class

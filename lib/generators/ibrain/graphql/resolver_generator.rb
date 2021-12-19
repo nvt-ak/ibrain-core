@@ -17,6 +17,7 @@ module Ibrain
       source_root File.expand_path('templates', __dir__)
 
       argument :name, type: :string
+      class_option :model, type: :string, default: nil
 
       def initialize(args, *options) # :nodoc:
         # Unfreeze name in case it's given as a frozen string
@@ -26,7 +27,7 @@ module Ibrain
         assign_names!(name)
       end
 
-      attr_reader :file_name, :resolver_name, :field_name
+      attr_reader :file_name, :resolver_name, :field_name, :model_name
 
       def create_resolver_file
         if @behavior == :revoke
@@ -36,11 +37,12 @@ module Ibrain
         end
 
         template "resolver.erb", "#{options[:directory]}/resolvers/#{file_name}.rb"
+        template "aggregate.erb", "#{options[:directory]}/resolvers/#{file_name}_aggregate.rb"
 
         sentinel = /class .*QueryType\s*<\s*[^\s]+?\n/m
         in_root do
           gsub_file "#{options[:directory]}/types/query_type.rb", /  \# TODO: Add Resolvers as fields\s*\n/m, ""
-          inject_into_file "#{options[:directory]}/types/query_type.rb", "    field :#{field_name}, resolver: Resolvers::#{resolver_name}\n", after: sentinel, verbose: false, force: false
+          inject_into_file "#{options[:directory]}/types/query_type.rb", "    field :#{field_name}, resolver: Resolvers::#{resolver_name}\n    field :#{field_name}_aggregate, resolver: Resolvers::#{resolver_name}Aggregate\n", after: sentinel, verbose: false, force: false
         end
       end
 
@@ -50,6 +52,7 @@ module Ibrain
         @field_name = name.camelize.underscore
         @resolver_name = name.camelize(:upper)
         @file_name = name.camelize.underscore
+        @model_name = options[:model].blank? ? 'Post' : options[:model].capitalize
       end
     end
   end

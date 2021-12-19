@@ -1,0 +1,10 @@
+<% module_namespacing_when_supported do -%>
+module Resolvers
+  class <%= "#{resolver_name}Aggregate" %> < Ibrain::Resolvers::BaseAggregate
+    # define resolve method
+    def resolve(args)
+      <%= model_name.capitalize %>.ransack(args[:filter]).result
+    end
+  end
+end
+<% end -%>

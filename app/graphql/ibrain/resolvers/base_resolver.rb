@@ -3,7 +3,7 @@
 module Ibrain
   module Resolvers
     class BaseResolver < GraphQL::Schema::Resolver
-      argument :filter, Ibrain::Types::FilterType, required: false, default_value: {}
+      argument :filter, Ibrain::Types::FilterType, required: false, default_value: nil
       argument :offset, Int, required: false, default_value: 0
       argument :limit, Int, required: false, default_value: 10
 

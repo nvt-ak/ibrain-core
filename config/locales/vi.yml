@@ -1,8 +1,10 @@
-ibrain:
-  system:
-    message:
-      success: Lấy dữ liệu thành công
-  errors:
-    session:
-      invalid_session: Phiên đăng nhập không hợp lệ. Vui lòng thử lại!
-      expired_session: Phiên đăng nhập đã hết hạn.
+vi:
+  ibrain:
+    system:
+      message:
+        success: Lấy dữ liệu thành công
+        ok: Lấy dữ liệu thành công
+    errors:
+      session:
+        invalid_session: Phiên đăng nhập không hợp lệ. Vui lòng thử lại!
+        expired_session: Phiên đăng nhập đã hết hạn.

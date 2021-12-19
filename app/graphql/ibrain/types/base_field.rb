@@ -6,7 +6,7 @@ module Ibrain
       argument_class ::Ibrain::Types::BaseArgument
 
       def initialize(*args, default_value: nil, **kwargs, &block)
-        super(*args, **kwargs, &block)
+        super(*args, camelize: false, **kwargs, &block)
 
         extension(::Ibrain::Extentions::DefaultValue, default_value: default_value) unless default_value.nil?
       end

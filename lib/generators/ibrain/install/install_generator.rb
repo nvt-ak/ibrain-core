@@ -89,7 +89,7 @@ module Ibrain
       end
 
       if options[:with_graphql]
-        append_gem('graphql', '1.13.1')
+        append_gem('graphql', '1.12.6')
         append_gem('graphql-batch', '0.4.3')
         append_gem('graphql-guard', '2.0.0')
         append_gem('graphql-rails-generators', '1.1.2', 'development')

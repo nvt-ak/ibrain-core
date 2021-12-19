@@ -11,9 +11,9 @@ Gem::Specification.new do |spec|
   spec.summary     = "Its Core is an sso authen gem for Ruby on Rails."
   spec.description = spec.summary
   spec.license     = "MIT"
-
   spec.metadata["homepage_uri"] = spec.homepage
   spec.metadata["source_code_uri"] = "https://github.com/john-techfox/ibrain-core.git"
+  spec.metadata["rubygems_mfa_required"] = 'true'
 
   spec.files = Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.md"]
 
@@ -27,8 +27,4 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'rack-cors', '~> 1.1.1'
   spec.add_dependency "rails", "~> 6.1.4", ">= 6.1.4.1"
   spec.add_dependency 'ransack', '~> 2.4.2'
-
-  spec.metadata = {
-    'rubygems_mfa_required' => 'true'
-  }
 end

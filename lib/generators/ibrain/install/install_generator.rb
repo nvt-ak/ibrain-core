@@ -15,6 +15,7 @@ module Ibrain
     class_option :with_annotation, type: :boolean, default: true
     class_option :with_sendgrid, type: :boolean, default: false
     class_option :enforce_available_locales, type: :boolean, default: nil
+    class_option :with_ridgepole, type: :boolean, default: true
 
     def self.source_paths
       paths = superclass.source_paths
@@ -97,7 +98,7 @@ module Ibrain
 
       append_gem('annotate', '3.1.1', 'development') if options[:with_annotation]
       append_gem('sendgrid-ruby', '6.6.0') if options[:with_sendgrid]
-      append_gem('ridgepole', '0.9.6', 'development') if options[:with_ridgepole]
+      append_gem('ridgepole', '1.0.0', 'development') if options[:with_ridgepole]
 
       bundle_cleanly{ run "bundle install" } if @plugins_to_be_installed.any?
       run "spring stop" if defined?(Spring)
@@ -134,11 +135,17 @@ module Ibrain
     end
 
     def add_files
-      template 'config/initializers/ibrain.rb.tt', 'config/initializers/ibrain.rb'
-      template 'config/initializers/cors.tt', 'config/initializers/cors.rb'
-      template 'config/puma.tt', 'config/puma.rb'
-      yml_template 'config/database.tt', 'config/database.yml'
-      template '.rubocop.yml.tt', '.rubocop.yml' if options[:with_rubocop]
+      template 'config/initializers/ibrain.rb.tt', 'config/initializers/ibrain.rb', { skip: true }
+      template 'config/initializers/cors.tt', 'config/initializers/cors.rb', { skip: true }
+      template 'config/puma.tt', 'config/puma.rb', { skip: true }
+      yml_template 'config/database.tt', 'config/database.yml', { skip: true }
+      template '.rubocop.yml.tt', '.rubocop.yml', { skip: true } if options[:with_rubocop]
+
+      if options[:with_graphql]
+        template 'graphql/app_schema.rb.tt', 'app/graphql/app_schema.rb', { skip: true }
+        template 'graphql/types/mutation_type.rb.tt', 'app/graphql/types/mutation_type.rb', { skip: true }
+        template 'graphql/types/query_type.rb.tt', 'app/graphql/types/query_type.rb', { skip: true }
+      end
     end
 
     def complete

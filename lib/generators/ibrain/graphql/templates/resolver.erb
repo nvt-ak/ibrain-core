@@ -1,0 +1,18 @@
+<% module_namespacing_when_supported do -%>
+module Ibrain
+  module Resolvers
+    class <%= resolver_name %> < Ibrain::Resolvers::BaseResolver
+      # TODO: define return fields
+      # type Types::Objects::PostType, null: false
+
+      # TODO: define arguments
+      # argument :name, String, required: true
+
+      # TODO: define resolve method
+      # def resolve(name:)
+      #   { post: ... }
+      # end
+    end
+  end
+end
+<% end -%>

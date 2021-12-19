@@ -1,0 +1,4 @@
+class AppSchema < Ibrain::BaseSchema
+  mutation(Types::MutationType)
+  query(Types::QueryType)
+end

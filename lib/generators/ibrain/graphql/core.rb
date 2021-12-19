@@ -63,6 +63,7 @@ module Ibrain
 
       def parent_name
         require File.expand_path("config/application", destination_root)
+
         if Rails.application.class.respond_to?(:module_parent_name)
           Rails.application.class.module_parent_name
         else

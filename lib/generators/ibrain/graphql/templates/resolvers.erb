@@ -1,0 +1,13 @@
+<% module_namespacing_when_supported do -%>
+module Resolvers
+  class <%= resolver_name %> < <%= "#{resolver_name}Aggregate" %>
+    # TODO: define return fields
+    type [Types::Objects::<%= model_name.capitalize %>Type], null: false
+
+    # TODO: define resolve method
+    def resolve(args)
+      super(args).limit(args[:limit]).offset(args[:offset])
+    end
+  end
+end
+<% end -%>

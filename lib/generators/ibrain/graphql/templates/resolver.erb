@@ -4,9 +4,11 @@ module Resolvers
     # TODO: define return fields
     type Types::Objects::<%= model_name.capitalize %>Type, null: false
 
+    argument :id, ID, required: false
+
     # TODO: define resolve method
     def resolve(args)
-      super(args).limit(args[:limit]).offset(args[:offset])
+      <%= model_name.capitalize %>.find args[:id]
     end
   end
 end

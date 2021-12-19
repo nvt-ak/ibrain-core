@@ -17,6 +17,7 @@ module Ibrain
       source_root File.expand_path('templates', __dir__)
 
       argument :name, type: :string
+      class_option :model, type: :string, default: nil
 
       def initialize(args, *options) # :nodoc:
         # Unfreeze name in case it's given as a frozen string
@@ -26,7 +27,7 @@ module Ibrain
         assign_names!(name)
       end
 
-      attr_reader :file_name, :mutation_name, :field_name
+      attr_reader :file_name, :mutation_name, :field_name, :model_name
 
       def create_mutation_file
         if @behavior == :revoke
@@ -50,6 +51,7 @@ module Ibrain
         @field_name = name.camelize.underscore
         @mutation_name = name.camelize(:upper)
         @file_name = name.camelize.underscore
+        @model_name = options[:model].blank? ? 'Post' : options[:model].capitalize
       end
     end
   end

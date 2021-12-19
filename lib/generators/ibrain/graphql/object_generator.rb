@@ -40,7 +40,7 @@ module Ibrain
 
       def self.normalize_type_expression(type_expression, mode:, null: true)
         case type_expression
-        when "Text"
+        when "Text", "Json", "json"
           ["String", null]
         when "Decimal"
           ["Float", null]

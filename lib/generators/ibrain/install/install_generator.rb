@@ -7,6 +7,7 @@ module Ibrain
   # @private
   class InstallGenerator < Rails::Generators::Base
     CORE_MOUNT_ROUTE = "mount Ibrain::Core::Engine"
+    source_root File.expand_path('templates', __dir__)
 
     class_option :user_class, type: :string
     class_option :with_authentication, type: :boolean, default: true
@@ -16,14 +17,6 @@ module Ibrain
     class_option :with_sendgrid, type: :boolean, default: false
     class_option :enforce_available_locales, type: :boolean, default: nil
     class_option :with_ridgepole, type: :boolean, default: true
-
-    def self.source_paths
-      paths = superclass.source_paths
-      paths << File.expand_path('../templates', "../../#{__FILE__}")
-      paths << File.expand_path('../templates', "../#{__FILE__}")
-      paths << File.expand_path('templates', __dir__)
-      paths.flatten
-    end
 
     def additional_tweaks
       return unless File.exist? 'public/robots.txt'
@@ -98,7 +91,12 @@ module Ibrain
 
       append_gem('annotate', '3.1.1', 'development') if options[:with_annotation]
       append_gem('sendgrid-ruby', '6.6.0') if options[:with_sendgrid]
-      append_gem('ridgepole', '1.0.0', 'development') if options[:with_ridgepole]
+
+      if options[:with_ridgepole]
+        append_gem('ridgepole', '1.0.0', 'development')
+      else
+        remove_gem('ridgepole')
+      end
 
       bundle_cleanly{ run "bundle install" } if @plugins_to_be_installed.any?
       run "spring stop" if defined?(Spring)
@@ -167,9 +165,15 @@ module Ibrain
       shell_command = ["\ngem '#{name}', '~> #{version}'"]
       shell_command.push("group: :#{group_name}") if group_name.present?
       string_command = shell_command.join(', ')
-      grep_command = "gem list | grep '#{name} (#{version})'"
+      gems = Gem.loaded_specs.values.map(&:full_name).join(' ')
 
-      system( `echo "#{string_command}" >> Gemfile` ) unless system(grep_command)
+      system( `echo "#{string_command}" >> Gemfile` ) unless gems.include?("#{name}-")
+    end
+
+    def remove_gem(name)
+      gems = Gem.loaded_specs.values.map(&:full_name).join(' ')
+
+      system( "bundle remove #{name}" ) if gems.include?("#{name}-")
     end
 
     def yml_template(source, *args)

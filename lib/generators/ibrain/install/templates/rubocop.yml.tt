@@ -113,6 +113,7 @@ Rails/DynamicFindBy:
 # It's okay to skip model validations to setup a spec.
 Rails/SkipsModelValidations:
   Exclude:
+    - db/seeds/**/*.rb
     - '*/spec/**/*'
 
 # We use a lot of
@@ -277,7 +278,7 @@ Metrics/BlockLength:
 Metrics/CyclomaticComplexity:
   Enabled: false
 
-Metrics/LineLength:
+Layout/LineLength:
   Enabled: false
 
 Metrics/MethodLength:
@@ -596,3 +597,19 @@ Gemspec/RequiredRubyVersion:
 
 GraphQL/FieldDescription:
   Enabled: false
+
+GraphQL/ObjectDescription:
+  Enabled: true
+  Exclude:
+    - app/graphql/policies/*.rb
+    - app/graphql/*.rb
+
+GraphQL/ExtractType:
+  Enabled: false
+
+Rails/UnknownEnv:
+  Environments:
+    - production
+    - development
+    - test
+    - staging

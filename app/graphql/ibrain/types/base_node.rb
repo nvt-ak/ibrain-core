@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Ibrain::Types::BaseNode < Types::BaseObject
-  implements ::GraphQL::Relay::Node.interface
+  include ::GraphQL::Relay::Node
   implements ::Ibrain::Interfaces::RecordInterface
 
   global_id_field :id

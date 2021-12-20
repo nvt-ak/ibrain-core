@@ -3,8 +3,6 @@
 module Ibrain
   module Extentions
     class DefaultValue < GraphQL::Schema::FieldExtension
-      description 'Default value extention'
-
       def after_resolve(value:, **_rest)
         if value.nil?
           options[:default_value]

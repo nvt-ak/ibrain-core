@@ -3,7 +3,7 @@
 module Ibrain
   module Types
     class BaseObject < GraphQL::Schema::Object
-      implements GraphQL::Relay::Node.interface
+      include GraphQL::Relay::Node
 
       edge_type_class(Ibrain::Types::BaseEdge)
       connection_type_class(Ibrain::Types::BaseConnection)

@@ -10,7 +10,7 @@ module Ibrain
         variables: variables,
         context: {
           session: session,
-          current_user: current_ibrain_user
+          current_user: try_ibrain_current_user
         },
         operation_name: operation_name
       )

@@ -52,11 +52,15 @@ module Ibrain
           # This one will be defined by apps looking to hook into Ibrain
           # As per authentication_helpers.rb
           if respond_to?(:ibrain_current_user, true)
-            ibrain_current_user
+            try(:ibrain_current_user)
           # This one will be defined by Devise
           elsif respond_to?(:current_ibrain_user, true)
-            current_ibrain_user
+            try(:current_ibrain_user)
           end
+        rescue StandardError => e
+          Ibrain::Logger.warn e.message.to_s
+
+          nil
         end
       end
     end

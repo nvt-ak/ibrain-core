@@ -36,6 +36,10 @@ module Ibrain
         insert_root_type('query', 'QueryType')
       end
 
+      def create_repository_root_type
+        create_dir("app/repositories")
+      end
+
       def schema_file_path
         "#{options[:directory]}/#{schema_name.underscore}.rb"
       end

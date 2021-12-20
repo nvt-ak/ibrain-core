@@ -36,6 +36,10 @@ module Ibrain
           create_mutation_root_type
         end
 
+        if options[:model].present?
+          system("bundle exec rails generate ibrain:graphql:object #{options[:model].downcase}")
+        end
+
         template "mutation.erb", "#{options[:directory]}/mutations/#{file_name}.rb"
 
         sentinel = /class .*MutationType\s*<\s*[^\s]+?\n/m

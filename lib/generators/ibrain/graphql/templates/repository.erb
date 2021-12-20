@@ -1,0 +1,19 @@
+# frozen_string_literal: true
+
+<% module_namespacing_when_supported do -%>
+class <%= model_name %>Repository < Ibrain::BaseRepository
+  def initialize(current_user, record = nil)
+    super(current_user, record)
+  end
+
+  class << self
+    def find(args)
+      <%= model_name %>.find args[:id]
+    end
+
+    def aggregate(args)
+      <%= model_name %>.ransack(args[:filter]).result
+    end
+  end
+end
+<% end -%>

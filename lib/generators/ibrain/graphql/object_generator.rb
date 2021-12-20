@@ -29,7 +29,10 @@ module Ibrain
                    desc: "Include the Relay Node interface"
 
       def create_type_file
+        create_dir('app/repositories') unless Dir.exist?('app/repositories')
+
         template "object.erb", "#{options[:directory]}/types/objects/#{type_file_name}.rb"
+        template "repository.erb", "app/repositories/#{type_name}_repository.rb"
       end
 
       def fields
@@ -70,6 +73,10 @@ module Ibrain
         klass.is_a?(Class) && klass.ancestors.include?(ActiveRecord::Base)
       rescue NameError
         false
+      end
+
+      def model_name
+        type_name.capitalize
       end
 
       def klass

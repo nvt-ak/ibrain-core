@@ -36,6 +36,10 @@ module Ibrain
           create_resolver_root_type
         end
 
+        if options[:model].present?
+          system("bundle exec rails generate ibrain:graphql:object #{options[:model].downcase}")
+        end
+
         template "resolvers.erb", "#{options[:directory]}/resolvers/#{file_name}.rb"
         template "aggregate.erb", "#{options[:directory]}/resolvers/#{file_name}_aggregate.rb"
 

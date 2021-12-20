@@ -11,7 +11,7 @@ module Resolvers
 
     # TODO: define resolve method
     def resolve(args)
-      super(args).limit(args[:limit]).offset(args[:offset])
+      super(args).paginate(args)
     end
   end
 end

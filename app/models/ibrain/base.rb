@@ -5,16 +5,12 @@ class Ibrain::Base < Ibrain::ApplicationRecord
 
   self.abstract_class = true
 
-  def self.adjust_date_for_cdt(datetime)
-    datetime.in_time_zone('UTC')
-  end
-
   def string_id
     try(:id).try(:to_s)
   end
 
   scope :graphql_ransack, lambda { |params|
-    ransack(params).result(distinct: true)
+    ransack(params).result
   }
 
   scope :reverse_scope, lambda {
@@ -36,12 +32,22 @@ class Ibrain::Base < Ibrain::ApplicationRecord
     time_ago_in_words(created_at)
   end
 
-  # Provides a scope that should be included any time data
-  # are fetched with the intention of displaying to the user.
-  #
-  # Allows individual stores to include any active record scopes or joins
-  # when data are displayed.
-  def self.display_includes
-    where(nil)
+  class << self
+    # Provides a scope that should be included any time data
+    # are fetched with the intention of displaying to the user.
+    #
+    # Allows individual stores to include any active record scopes or joins
+    # when data are displayed.
+    def display_includes
+      where(nil)
+    end
+
+    def paginate(args)
+      limit(args[:limit]).offset(args[:offset])
+    end
+
+    def adjust_date_for_cdt(datetime)
+      datetime.in_time_zone('UTC')
+    end
   end
 end

@@ -35,17 +35,6 @@ module Ibrain
     end
 
     def configure_application
-      application <<-RUBY
-        # Load application's model / class decorators
-        initializer 'ibrain.decorators' do |app|
-          config.to_prepare do
-            Dir.glob(Rails.root.join('app/**/*_decorator*.rb')) do |path|
-              require_dependency(path)
-            end
-          end
-        end
-      RUBY
-
       if !options[:enforce_available_locales].nil?
         application <<-RUBY
           I18n.enforce_available_locales = #{options[:enforce_available_locales]}
@@ -135,10 +124,10 @@ module Ibrain
 
     def add_files
       template 'config/initializers/ibrain.rb.tt', 'config/initializers/ibrain.rb', { skip: true }
-      template 'config/initializers/cors.tt', 'config/initializers/cors.rb', { skip: true }
-      template 'config/puma.tt', 'config/puma.rb', { skip: true }
-      yml_template 'config/database.tt', 'config/database.yml', { skip: true }
-      template 'rubocop.yml.tt', '.rubocop.yml', { skip: true } if options[:with_rubocop]
+      template 'config/initializers/cors.tt', 'config/initializers/cors.rb'
+      template 'config/puma.tt', 'config/puma.rb'
+      yml_template 'config/database.tt', 'config/database.yml'
+      template 'rubocop.yml.tt', '.rubocop.yml' if options[:with_rubocop]
 
       if options[:with_graphql]
         template 'graphql/app_schema.rb.tt', 'app/graphql/app_schema.rb', { skip: true }

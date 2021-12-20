@@ -79,6 +79,7 @@ module Ibrain
         append_gem('rubocop', '1.23.0', 'development')
         append_gem('rubocop-performance', '1.12.0', 'development')
         append_gem('rubocop-rails', '2.12.4', 'development')
+        append_gem('rubocop-graphql', '0.11.2', 'development')
       end
 
       if options[:with_graphql]

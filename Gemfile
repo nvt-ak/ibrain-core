@@ -20,5 +20,6 @@ group :utils do
   gem 'rubocop', '~> 1.23.0', require: false
   gem 'rubocop-performance', '~> 1.12.0', require: false
   gem 'rubocop-rails', '~> 2.12.4', require: false
+  gem 'rubocop-graphql', require: false
   gem 'gem-release', require: false
 end

@@ -1,4 +1,8 @@
+# frozen_string_literal: true
+
 class AppSchema < Ibrain::BaseSchema
+  description 'Define root schema'
+
   mutation(Types::MutationType)
   query(Types::QueryType)
 end

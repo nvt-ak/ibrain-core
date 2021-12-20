@@ -1,8 +1,13 @@
+# frozen_string_literal: true
+
 <% module_namespacing_when_supported do -%>
 module Resolvers
-  class <%= resolver_name %> < <%= "#{resolver_name}Aggregate" %>
+  class <%= resolver_name %> < <%= resolver_name %>Aggregate
+    # TODO: define description describe about this mutation
+    # description
+
     # TODO: define return fields
-    type [Types::Objects::<%= model_name.capitalize %>Type], null: false
+    type [Types::Objects::<%= model_name.capitalize %>Type], null: false, description: 'Define data type will be response to client'
 
     # TODO: define resolve method
     def resolve(args)

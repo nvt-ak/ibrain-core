@@ -1,8 +1,13 @@
+# frozen_string_literal: true
+
 <% module_namespacing_when_supported do -%>
 module Mutations
   class <%= mutation_name %> < Ibrain::Mutations::BaseMutation
+    # TODO: define description describe about this mutation
+    # description
+
     # TODO: define return fields
-    field :<%= model_name.underscore %>, Types::<%= model_name %>Type, null: false
+    field :<%= model_name.underscore %>, Types::<%= model_name %>Type, null: false, description: 'Record Type for mutation response'
 
     # TODO: define arguments
     # argument :name, String, required: true

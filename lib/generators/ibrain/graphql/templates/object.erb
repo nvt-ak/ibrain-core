@@ -1,8 +1,12 @@
+# frozen_string_literal: true
+
 <% module_namespacing_when_supported do -%>
 module Types
   module Objects
     class <%= type_ruby_name.split('::')[-1] %> < Ibrain::Types::BaseObject
       implements Ibrain::Interfaces::RecordInterface
+
+      description '<%= type_ruby_name.split('::')[-1] %>'
       
     <% normalized_fields.each do |f| %>  <%= f.to_ruby %>
     <% end %>end

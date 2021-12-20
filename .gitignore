@@ -22,4 +22,4 @@
 
 .DS_Store
 Gemfile.lock
-ibrain-core-0.1.0.gem
+*.gem

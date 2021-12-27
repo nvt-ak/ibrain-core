@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+IGNORE_ATTRIBUTES = %w(id created_at updated_at)
+
 class Ibrain::Base < Ibrain::ApplicationRecord
   include ActionView::Helpers::DateHelper
 
@@ -48,6 +50,10 @@ class Ibrain::Base < Ibrain::ApplicationRecord
 
     def adjust_date_for_cdt(datetime)
       datetime.in_time_zone('UTC')
+    end
+
+    def permitted_attributes
+      column_names.reject { |k| IGNORE_ATTRIBUTES.include?(k) }
     end
   end
 end

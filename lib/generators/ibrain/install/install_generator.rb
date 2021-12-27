@@ -55,7 +55,7 @@ module Ibrain
         Would you like to install it? (Y/n)"))
 
         @plugins_to_be_installed << 'ibrain-auth' unless system('gem list | grep ibrain-auth')
-        @plugin_generators_to_run << 'ibrain:auth:install'
+        @plugin_generators_to_run << "ibrain:auth:install --with-ridgpole=#{options[:with_ridgepole]}"
       end
     end
 

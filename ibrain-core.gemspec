@@ -20,6 +20,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'activerecord-session_store', '~> 1.0'
   spec.add_dependency "awesome_nested_set", '~> 3.4.0'
   spec.add_dependency "cancancan", "~> 1.15.0"
+  spec.add_dependency 'discard', '~> 1.2'
   spec.add_dependency "friendly_id", "~> 5.4.2"
   spec.add_dependency "gem-release", '~> 2.2.2'
   spec.add_dependency "kaminari", "~> 1.2.1"

@@ -5,10 +5,8 @@ module Ibrain
     extend ActiveSupport::Concern
 
     include Ibrain::UserApiAuthentication
-    include Ibrain::UserReporting
 
     included do
-      extend Ibrain::DisplayMoney
       after_create :auto_generate_ibrain_api_key
 
       include Ibrain::RansackableAttributes unless included_modules.include?(Ibrain::RansackableAttributes)

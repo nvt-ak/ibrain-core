@@ -2,7 +2,7 @@
 
 module Ibrain
   module Lazy
-    class Base < GraphQL::Function
+    class Base < GraphQL::Schema::Resolver
     end
   end
 end

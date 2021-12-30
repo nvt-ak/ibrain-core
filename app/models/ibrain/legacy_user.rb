@@ -6,7 +6,7 @@ module Ibrain
   # @note This class is intended to be modified by extensions (ex.
   #   ibrain-auth)
   class LegacyUser < Ibrain::Base
-    include UserMethods
+    include Ibrain::UserMethods
 
     self.table_name = 'ibrain_users'
 

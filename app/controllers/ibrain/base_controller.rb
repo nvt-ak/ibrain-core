@@ -18,7 +18,7 @@ module Ibrain
     end
 
     def skip_operations
-      []
+      %w[sign_in].include?(operation_name)
     end
 
     def cryptor

@@ -30,6 +30,18 @@ module Ibrain
       def current_user
         context[:current_user]
       end
+
+      def controller
+        context[:controller]
+      end
+
+      def session
+        context[:session]
+      end
+
+      def request
+        context[:request]
+      end
     end
   end
 end

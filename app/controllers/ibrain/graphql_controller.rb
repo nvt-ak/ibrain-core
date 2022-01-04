@@ -2,6 +2,15 @@
 
 module Ibrain
   class GraphqlController < Ibrain::BaseController
+    include Devise::Controllers::ScopedViews
+
+    before_action :authenticate_user!, unless: :skip_operations
+    before_action :map_user_class_to_request
+
+    helpers = %w(resource scope_name resource_name signed_in_resource
+                 resource_class resource_params devise_mapping)
+    helper_method(*helpers)
+
     def execute
       query, variables, operation_name = normalize_entity
 
@@ -10,7 +19,9 @@ module Ibrain
         variables: variables,
         context: {
           session: session,
-          current_user: try_ibrain_current_user
+          current_user: try_ibrain_current_user,
+          controller: self,
+          request: request
         },
         operation_name: operation_name
       )
@@ -50,6 +61,12 @@ module Ibrain
 
     def schema
       Ibrain::Config.graphql_schema.safe_constantize
+    end
+
+    def map_user_class_to_request
+      return if request.env['devise.mapping'].present?
+
+      request.env['devise.mapping'] = Ibrain.user_class
     end
   end
 end

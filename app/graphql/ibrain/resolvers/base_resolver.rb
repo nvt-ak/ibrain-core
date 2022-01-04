@@ -10,6 +10,10 @@ module Ibrain
       def current_user
         context.fetch(:current_user)
       end
+
+      def controller
+        context[:controller]
+      end
     end
   end
 end

@@ -48,6 +48,9 @@ module Ibrain
     # Graphql Encryptor key
     preference :ibrain_encryptor_key, :string, default: nil
 
+    # Parent controller
+    preference :parent_controller, :string, default: 'ActionController::API'
+
     def static_model_preferences
       @static_model_preferences ||= Ibrain::Preferences::StaticModelPreferences.new
     end

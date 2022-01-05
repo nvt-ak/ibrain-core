@@ -54,20 +54,34 @@ bundle exec rails generate ibrain:graphql:resolvers users --model=User
 For pagination please using aggregate body query, something like
 ```
 query users($offset: Int, $limit: Int, $filter: Filter) {
-    users(offset: $offset, limit: $limit, filter: $filter) {
-        id
-        first_name
-    }
+	users(offset: $offset, limit: $limit, filter: $filter) {
+		id
+		first_name
+	}
 
-    users_aggregate(filter: $filter) {
-        total_count
-    }
+	users_aggregate(filter: $filter) {
+		total_count
+	}
 }
 ```
 To generate graphql mutation to insert, update, delete user
 ```bash
 bundle exec rails generate ibrain:graphql:mutation insert_user --model=User
 ```
+
+Default all operation will be rejected if you not have Authorization Token at request header, so to skip authenticate please change `parent_controller` at `ibrain.rb`
+```
+config.parent_controller = "<Your parent controller>"
+```
+then create method skip_operations at this parent_controller
+```
+class ApplicationController < BaseController::API
+	def skip_operations
+		%w[sign_in].include?(operation_name)
+	end
+end
+```
+
 ## Contributing
 Contribution directions go here.
 

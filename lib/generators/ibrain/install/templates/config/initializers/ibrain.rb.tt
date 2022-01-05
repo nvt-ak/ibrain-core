@@ -41,6 +41,9 @@ Ibrain.config do |config|
 
   # Graphql Encryptor key
   # config.ibrain_encryptor_key = Rails.application.secrets.secret_key_base.byteslice(0..31)
+
+  # Parent controller
+  # config.parent_controller = 'ActionController::API'
 end
 
 <% if defined?(Ibrain::Api::Engine) -%>

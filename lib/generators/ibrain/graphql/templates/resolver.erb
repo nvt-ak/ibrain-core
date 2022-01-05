@@ -7,7 +7,7 @@ module Resolvers
     # description
 
     # TODO: define return fields
-    type Types::Objects::<%= model_name.capitalize %>Type, null: false, description: 'Define data type will be response to client'
+    type Types::Objects::<%= model_name.capitalize %>Type, null: false
 
     argument :id, ID, required: false, description: 'TODO: describe about this argument'
 

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Ibrain
-  class BaseController < ActionController::API
+  class BaseController < Ibrain::Config.parent_controller.constantize
     include ActionController::Helpers
     include Ibrain::Core::ControllerHelpers::Response
     include Ibrain::Core::ControllerHelpers::StrongParameters
@@ -18,7 +18,7 @@ module Ibrain
     end
 
     def skip_operations
-      %w[sign_in].include?(operation_name)
+      super || ['IntrospectionQuery'].include?(operation_name)
     end
 
     def cryptor

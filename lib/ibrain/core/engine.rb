@@ -5,7 +5,7 @@ require 'ibrain/config'
 module Ibrain
   module Core
     class Engine < ::Rails::Engine
-      isolate_namespace Ibrain
+      isolate_namespace Ibrain::Core
       config.generators.api_only = true
 
       initializer "ibrain.environment", before: :load_config_initializers do |app|

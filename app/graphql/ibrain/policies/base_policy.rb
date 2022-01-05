@@ -3,26 +3,32 @@
 module Ibrain
   module Policies
     class BasePolicy
-      IBRAIN_QUERY_RULES = {
-        '*': {
-          guard: ->(_obj, _args, _ctx) { true }
-        }
-      }
-
-      IBRAIN_MUTATION_RULES = {
-        '*': {
-          guard: ->(_obj, _args, ctx) { roles.include?(ctx[:current_user].try(:role)) }
-        }
-      }
-
-      RULES = {
-        'Query' => IBRAIN_QUERY_RULES,
-        'Mutation' => IBRAIN_MUTATION_RULES
-      }.freeze
-
       class << self
+        def query_rules
+          {
+            '*': {
+              guard: ->(_obj, _args, _ctx) { false }
+            }
+          }
+        end
+
+        def mutation_rules
+          {
+            '*': {
+              guard: ->(_obj, _args, _ctx) { false }
+            }
+          }
+        end
+
+        def rules
+          {
+            'Types::QueryType' => query_rules,
+            'Types::MutationType' => mutation_rules
+          }.freeze
+        end
+
         def roles
-          Ibrain::Config.ibrain_roles
+          Ibrain.user_class.roles.keys
         end
 
         def has_permission?(current_user, resource)
@@ -33,11 +39,11 @@ module Ibrain
         end
 
         def guard(type, field)
-          RULES.dig(type.name, field, :guard)
+          rules.dig(type.name, field, :guard)
         end
 
         def not_authorized_handler(type, field)
-          RULES.dig(type, field, :not_authorized) || RULES.dig(type, :*, :not_authorized)
+          rules.dig(type, field, :not_authorized) || rules.dig(type, :*, :not_authorized)
         end
       end
     end

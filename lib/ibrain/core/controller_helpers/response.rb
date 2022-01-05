@@ -16,6 +16,7 @@ module Ibrain
         def render_json_error(error, status)
           e_message = error.try(:record).try(:errors).try(:full_messages).try(:first)
           e_message = error.try(:message) if e_message.blank?
+          e_message = error.try(:details) if e_message.blank?
 
           backtrace = error.try(:backtrace).try(:join, "\n")
 

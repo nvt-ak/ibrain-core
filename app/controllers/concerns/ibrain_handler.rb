@@ -12,6 +12,7 @@ module IbrainHandler
     rescue_from IbrainErrors::UnknownError, with: :bad_request_handler
     rescue_from ActionController::InvalidAuthenticityToken, with: :unauthorized_handler
     rescue_from ActiveSupport::MessageVerifier::InvalidSignature, with: :unauthorized_handler
+    rescue_from GraphQL::ExecutionError, with: :bad_request_handler
   end
 
   private

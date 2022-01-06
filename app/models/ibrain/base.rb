@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-IGNORE_ATTRIBUTES = %w(id created_at updated_at)
-
 class Ibrain::Base < Ibrain::ApplicationRecord
   include ActionView::Helpers::DateHelper
+
+  IGNORE_ATTRIBUTES = %w(id created_at updated_at)
 
   self.abstract_class = true
 

@@ -1,14 +1,22 @@
 # frozen_string_literal: true
 
 module Types
-  class MutationType < Ibrain::Types::BaseObject
+  class MutationType < Ibrain::Types::BaseApiObject
     description 'Define all mutation for client'
 
     # TODO: remove me
-    field :test_field, String, null: false,
+    # Default session_required is true, set false if yout want to skip authenticated
+    field :test_authenticated_field, , String, null: false,
                                description: 'An example field added by the generator'
+
+    field :test_field, String, null: false,
+                               description: 'An example field added by the generator', session_required: false
     def test_field
       'Hello World'
+    end
+
+    def test_authenticated_field
+      'Im logged in!'
     end
   end
 end

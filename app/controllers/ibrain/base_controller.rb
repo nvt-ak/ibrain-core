@@ -13,14 +13,6 @@ module Ibrain
 
     protected
 
-    def operation_name
-      params[:operationName]
-    end
-
-    def skip_operations
-      super || ['IntrospectionQuery'].include?(operation_name)
-    end
-
     def cryptor
       Ibrain::Encryptor.new
     end

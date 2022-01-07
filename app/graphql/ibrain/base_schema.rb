@@ -6,7 +6,7 @@ module Ibrain
 
     use GraphQL::Guard.new(
       policy_object: ::Ibrain::Config.graphql_policy.safe_constantize,
-      not_authorized: ->(type, field) { raise IbrainErrors::UnknownError.new("Not authorized to access #{type}.#{field}") }
+      not_authorized: ->(type, field) { raise IbrainErrors::PermissionError.new("You not have permission to access #{type}.#{field}") }
     )
 
     # Union and Interface Resolution

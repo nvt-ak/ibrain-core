@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Types
-  class QueryType < Ibrain::Types::BaseObject
+  class QueryType < Ibrain::Types::BaseApiObject
     description 'Define all resolver for client'
 
     # Add `node(id: ID!) and `nodes(ids: [ID!]!)`
@@ -9,9 +9,11 @@ module Types
     include GraphQL::Types::Relay::HasNodesField
 
     # Add root-level fields here.
+    # Default session_required is true, set false if yout want to skip authenticated
     # They will be entry points for queries on your schema.
 
     # Example with user resolvers
-    # field :users, resolver: Resolvers::UsersResolver
+    # field :authenticated_users, resolver: Resolvers::UsersResolver
+    # field :users, resolver: Resolvers::UsersResolver, session_required: false
   end
 end

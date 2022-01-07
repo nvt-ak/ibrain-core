@@ -1,14 +1,14 @@
 # frozen_string_literal: true
 
 module Ibrain
-  VERSION = "0.2.1"
+  VERSION = "0.2.2"
 
   def self.ibrain_version
     VERSION
   end
 
   def self.previous_ibrain_minor_version
-    '0.2.0'
+    '0.2.1'
   end
 
   def self.ibrain_gem_version

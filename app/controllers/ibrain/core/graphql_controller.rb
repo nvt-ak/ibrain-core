@@ -5,7 +5,6 @@ module Ibrain
     class GraphqlController < ::Ibrain::BaseController
       include Devise::Controllers::ScopedViews
 
-      before_action :authenticate_user!, unless: :skip_operations
       before_action :map_user_class_to_request
 
       helpers = %w(resource scope_name resource_name signed_in_resource

@@ -13,7 +13,7 @@ module Ibrain
       private
 
       def is_invalid_session(object)
-        object.try(:contect).try(:fetch, :current_user, nil).blank? && options.try(:fetch, :session_required, false)
+        object.try(:context).try(:fetch, :current_user, nil).blank? && options.try(:fetch, :session_required, false)
       end
     end
   end

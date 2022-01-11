@@ -6,7 +6,6 @@ module Ibrain
       def after_resolve(object:, value:, **_rest)
         raise IbrainErrors::PermissionError.new("You not have permission to access #{field&.name}") if is_invalid_role(object)
 
-        # yield the current time as `memo`
         value
       end
 
@@ -20,6 +19,8 @@ module Ibrain
         return if roles.blank?
         return true if current_user.blank?
         return false if roles.include?(role)
+
+        true
       end
     end
   end

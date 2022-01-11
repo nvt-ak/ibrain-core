@@ -3,11 +3,11 @@
 module Ibrain
   module Extentions
     class Roles < GraphQL::Schema::FieldExtension
-      def after_resolve(object:, arguments:, **rest)
+      def after_resolve(object:, value:, **_rest)
         raise IbrainErrors::PermissionError.new("You not have permission to access #{field&.name}") if is_invalid_role(object)
 
         # yield the current time as `memo`
-        yield(object, arguments, rest)
+        value
       end
 
       private

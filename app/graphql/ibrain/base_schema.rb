@@ -4,10 +4,10 @@ module Ibrain
   class BaseSchema < ::GraphQL::Schema
     use GraphQL::Batch
 
-    use GraphQL::Guard.new(
-      policy_object: ::Ibrain::Config.graphql_policy.safe_constantize,
-      not_authorized: ->(type, field) { raise IbrainErrors::PermissionError.new("You not have permission to access #{type}.#{field}") }
-    )
+    # use GraphQL::Guard.new(
+    #   policy_object: ::Ibrain::Config.graphql_policy.safe_constantize,
+    #   not_authorized: ->(type, field) { raise IbrainErrors::PermissionError.new("You not have permission to access #{type}.#{field}") }
+    # )
 
     # Union and Interface Resolution
     def self.resolve_type(_abstract_type, _obj, _ctx)

@@ -32,7 +32,7 @@ module Ibrain
       protected
 
       def normalize_entity
-        return [params[:query], params[:operationName], prepare_variables(params[:variables])] if params[:variables].present?
+        return [params[:query], prepare_variables(params[:variables]), params[:operationName]] if params[:variables].present?
 
         operations = prepare_variables(params[:operations])
         query = operations['query']

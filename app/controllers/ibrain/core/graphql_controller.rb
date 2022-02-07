@@ -32,9 +32,33 @@ module Ibrain
       protected
 
       def normalize_entity
-        query = params[:query]
-        operation_name = params[:operationName]
-        variables = prepare_variables(params[:variables])
+        return [params[:query], params[:operationName], prepare_variables(params[:variables])] if params[:variables].present?
+
+        operations = prepare_variables(params[:operations])
+        query = operations['query']
+        variables = operations['variables']
+        operation_name = operations['operationName']
+
+        if params[:map].present?
+          JSON.parse(params[:map]).each do |k, arguments|
+            argument_name = arguments.try(:first).try(:split, '.').try(:second)
+            next if argument_name.blank?
+
+            file = params[k]
+
+            if variables[argument_name].blank?
+              variables[argument_name] = variables[argument_name].is_a?(Array) ? [file] : file
+
+              next
+            end
+
+            unless variables[argument_name].is_a?(Array)
+              variables[argument_name] = [variables[argument_name]]
+            end
+
+            variables[argument_name] = variables[argument_name].concat([file]).compact
+          end
+        end
 
         [query, variables, operation_name]
       end

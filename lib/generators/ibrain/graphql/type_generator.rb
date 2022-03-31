@@ -49,6 +49,8 @@ module Ibrain
             else
               ["Types::#{type_expression.camelize}Type", null]
             end
+          when :input
+            ["Types::#{type_expression.camelize}Input", null]
           when :graphql
             [type_expression.camelize, null]
           else
@@ -74,6 +76,15 @@ module Ibrain
         @type_file_name ||= "#{type_graphql_name}Type".underscore
       end
 
+      # @return [String] The user-provided type name, as a file name (without extension)
+      def input_file_name
+        @input_file_name ||= "#{type_graphql_name}Input".underscore
+      end
+
+      def input_ruby_name
+        @input_ruby_name ||= self.class.normalize_type_expression(type_name, mode: :input)[0]
+      end
+
       # @return [Array<NormalizedField>] User-provided fields, in `(name, Ruby type name)` pairs
       def normalized_fields
         skip_fields = ["created_at:!Datetime", "updated_at:!Datetime"]
@@ -94,6 +105,10 @@ module Ibrain
 
         def to_ruby
           "field :#{@name}, #{@type_expr}, null: #{@null}"
+        end
+
+        def to_argument
+          "argument :#{@name}, #{@type_expr}, required: #{@null}"
         end
       end
     end

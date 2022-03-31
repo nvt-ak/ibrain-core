@@ -16,7 +16,8 @@ namespace :ridgepole do
   desc 'import seed data'
   task seed: :environment do
     path = Rails.root.join("db/seeds/#{Rails.env}.rb")
-    path = path.sub(Rails.env, 'development') unless File.exist?(path)
+    path = path.sub(Rails.env, ENV.fetch('RAILS_ENV', 'development')) unless File.exist?(path)
+
     require path
   end
 

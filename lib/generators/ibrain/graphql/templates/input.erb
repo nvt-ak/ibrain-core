@@ -1,0 +1,13 @@
+# frozen_string_literal: true
+
+<% module_namespacing_when_supported do -%>
+module Types
+  module Input
+    class <%= input_ruby_name.split('::')[-1] %> < Ibrain::Types::BaseInputObject
+      description '<%= input_ruby_name.split('::')[-1] %>'
+      
+    <% normalized_fields.each do |f| %>  <%= f.to_argument %>
+    <% end %>end
+  end
+end
+<% end -%>

@@ -32,6 +32,7 @@ module Ibrain
         create_dir('app/repositories') unless Dir.exist?('app/repositories')
 
         template "object.erb", "#{options[:directory]}/types/objects/#{type_file_name}.rb"
+        template "input.erb", "#{options[:directory]}/types/input/#{input_file_name}.rb"
         template "repository.erb", "app/repositories/#{type_name}_repository.rb"
       end
 

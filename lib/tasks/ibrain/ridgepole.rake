@@ -10,7 +10,21 @@ namespace :ridgepole do
 
   desc 'Export database schema'
   task export: :environment do
-    ridgepole('--export', "-E #{Rails.env}", '--split', "--output #{schema_file}")
+    ridgepole('--export', " #{Rails.env}", "--split", "--output #{schema_file}")
+
+    FileUtils.mkdir_p(schema_dir) unless File.directory?(schema_dir)
+
+    data = File.read(schema_file)
+    updated_data = data.gsub!("require '", "require 'schemas/")
+
+    File.open(schema_file, "w") { |file| file.puts updated_data }
+    system("cp #{db_dir}/*.schema #{schema_dir} && rm #{db_dir}/*.schema")
+
+    ActiveRecord::Base.connection.tables.each do |table_name|
+      system("bundle exec rails generate ibrain:core:model #{table_name.classify}")
+    end
+
+    system("bundle exec annotate --models --exclude fixtures")
   end
 
   desc 'import seed data'
@@ -23,8 +37,16 @@ namespace :ridgepole do
 
   private
 
+  def db_dir
+    Rails.root.join('db')
+  end
+
+  def schema_dir
+    "#{db_dir}/schemas"
+  end
+
   def schema_file
-    Rails.root.join('db/Schemafile')
+    "#{db_dir}/Schemafile"
   end
 
   def config_file

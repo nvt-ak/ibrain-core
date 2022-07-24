@@ -3,8 +3,13 @@
 module Ibrain
   module Types
     class BaseEdge < Types::BaseObject
-      # add `node` and `cursor` fields, as well as `node_type(...)` override
       include GraphQL::Types::Relay::EdgeBehaviors
+      include GraphQL::Relay::Node
+
+      edge_type_class(Ibrain::Types::BaseEdge)
+      connection_type_class(Ibrain::Types::BaseConnection)
+
+      field_class ::Ibrain::Types::BaseField
     end
   end
 end

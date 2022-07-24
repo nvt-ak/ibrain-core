@@ -17,15 +17,15 @@ Gem::Specification.new do |spec|
 
   spec.files = Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.md"]
 
-  spec.add_dependency 'activerecord-session_store', '~> 1.0'
-  spec.add_dependency "awesome_nested_set", '~> 3.4.0'
-  spec.add_dependency "cancancan", "~> 1.15.0"
-  spec.add_dependency 'discard', '~> 1.2'
-  spec.add_dependency "friendly_id", "~> 5.4.2"
-  spec.add_dependency "gem-release", '~> 2.2.2'
-  spec.add_dependency "kaminari", "~> 1.2.1"
-  spec.add_dependency 'puma', '~> 4.0'
-  spec.add_dependency 'rack-cors', '~> 1.1.1'
-  spec.add_dependency "rails", "~> 6.1.4", ">= 6.1.4.1"
-  spec.add_dependency 'ransack', '~> 2.4.2'
+  spec.add_dependency 'activerecord-session_store'
+  spec.add_dependency "awesome_nested_set"
+  spec.add_dependency "cancancan"
+  spec.add_dependency 'discard'
+  spec.add_dependency "friendly_id"
+  spec.add_dependency "gem-release"
+  spec.add_dependency "kaminari"
+  spec.add_dependency 'puma'
+  spec.add_dependency 'rack-cors'
+  spec.add_dependency "rails"
+  spec.add_dependency 'ransack'
 end

@@ -51,6 +51,8 @@ module Ibrain
     # Parent controller
     preference :parent_controller, :string, default: 'ActionController::API'
 
+    preference :master_database, :string, default: 'primary'
+
     def static_model_preferences
       @static_model_preferences ||= Ibrain::Preferences::StaticModelPreferences.new
     end

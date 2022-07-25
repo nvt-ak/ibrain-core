@@ -3,7 +3,11 @@
 namespace :ridgepole do
   desc 'Apply database schema'
   task apply: :environment do
-    ridgepole('--apply', "-E #{Rails.env}", "--file #{schema_file}")
+    databases = Rails.configuration.database_configuration.fetch(Rails.env, {}).keys
+    primary_database = Ibrain::Config.master_database
+    spec_option = databases.include?(primary_database) ? "--spec-name primary #{primary_database}" : ""
+
+    ridgepole('--apply', "-E #{Rails.env}", "--file #{schema_file}", spec_option)
     Rake::Task['db:schema:dump'].invoke if Rails.env.development?
     Rake::Task['annotate_models'].invoke if Rails.env.development?
   end

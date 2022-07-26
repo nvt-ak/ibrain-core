@@ -6,10 +6,10 @@ module Ibrain
       # add `nodes` and `pageInfo` fields, as well as `edge_type(...)` and `node_nullable(...)` overrides
       include GraphQL::Types::Relay::ConnectionBehaviors
 
-      field :count, Integer, null: false, camelize: false
+      field :aggregate, Ibrain::Types::AggregateType, null: false, camelize: false
 
-      def count
-        object.items.size
+      def aggregate
+        Ibrain::Aggregate.new(object.uniq.size)
       end
     end
   end

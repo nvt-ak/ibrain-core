@@ -3,7 +3,9 @@
 module Ibrain
   module Types
     class AggregateType < BaseObject
-      field :total_count, Int, null: false, default_value: 0
+      graphql_name 'aggregate'
+
+      field :count, Int, null: false
     end
   end
 end

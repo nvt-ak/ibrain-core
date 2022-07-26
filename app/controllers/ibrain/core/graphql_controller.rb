@@ -36,9 +36,9 @@ module Ibrain
         return [params[:query], prepare_variables(params[:variables]), 'IntrospectionQuery'] if params[:query].try(:include?, 'IntrospectionQuery')
 
         operations = prepare_variables(params[:operations])
-        query = operations['query']
-        variables = operations['variables']
-        operation_name = operations['operationName']
+        query = operations['query'] || params[:query]
+        variables = operations['variables'] || params[:variables]
+        operation_name = operations['operationName'] || params[:operationName]
 
         if params[:map].present?
           JSON.parse(params[:map]).each do |k, arguments|

@@ -3,7 +3,7 @@
 module Ibrain
   module Resolvers
     class BaseAggregate < BaseResolver
-      type Ibrain::Types::AggregateType.connection_type, null: false
+      type Ibrain::Types::BaseObject.connection_type, null: false
     end
   end
 end

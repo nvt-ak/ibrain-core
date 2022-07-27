@@ -9,7 +9,7 @@ module Ibrain
       field :aggregate, Ibrain::Types::AggregateType, null: false, camelize: false
 
       def aggregate
-        Ibrain::Aggregate.new(object.uniq.size)
+        Ibrain::Aggregate.new(object.items.size)
       end
     end
   end

@@ -7,7 +7,7 @@ module Mutations
     # description
 
     # TODO: define return fields
-    field :<%= model_name.underscore %>, Types::<%= model_name %>Type, null: false, description: 'Record Type for mutation response'
+    field :<%= model_name.underscore %>, Types::Objects::<%= model_name %>Type, null: false, description: 'Record Type for mutation response'
 
     # TODO: define arguments
     # argument :name, String, required: true

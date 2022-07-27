@@ -18,6 +18,7 @@ module Ibrain
 
       argument :name, type: :string
       class_option :model, type: :string, default: nil
+      class_option :prefix, type: :string, default: nil
 
       def initialize(args, *options) # :nodoc:
         # Unfreeze name in case it's given as a frozen string
@@ -42,20 +43,30 @@ module Ibrain
 
         template "mutation.erb", "#{options[:directory]}/mutations/#{file_name}.rb"
 
-        sentinel = /class .*MutationType\s*<\s*[^\s]+?\n/m
         in_root do
           gsub_file "#{options[:directory]}/types/mutation_type.rb", /  \# TODO: Add Mutations as fields\s*\n/m, ""
-          inject_into_file "#{options[:directory]}/types/mutation_type.rb", "    field :#{field_name}, mutation: Mutations::#{mutation_name}\n", after: sentinel, verbose: false, force: false
+          inject_into_file "#{options[:directory]}/types/mutation_type.rb", "\n    field :#{field_name}, mutation: Mutations::#{mutation_name} \n  ", before: "end\nend", verbose: true, force: true
         end
       end
 
       private
 
       def assign_names!(name)
-        @field_name = name.camelize.underscore
-        @mutation_name = name.camelize(:upper)
-        @file_name = name.camelize.underscore
-        @model_name = options[:model].blank? ? 'Post' : options[:model].capitalize
+        underscore_name = name&.camelize&.underscore
+        prefix = options[:prefix].try(:underscore)
+        @model_name = options[:model].blank? ? 'Post' : options[:model].try(:capitalize)
+
+        if prefix.blank?
+          @mutation_name = name.camelize(:upper)
+          @file_name = underscore_name
+          @field_name = underscore_name
+
+          return
+        end
+
+        @mutation_name = "#{prefix.try(:capitalize)}::#{name.camelize(:upper)}"
+        @file_name = "#{prefix}/#{underscore_name}"
+        @field_name = "#{prefix}_#{underscore_name}"
       end
     end
   end

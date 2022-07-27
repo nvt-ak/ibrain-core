@@ -18,6 +18,7 @@ module Ibrain
 
       argument :name, type: :string
       class_option :model, type: :string, default: nil
+      class_option :prefix, type: :string, default: nil
 
       def initialize(args, *options) # :nodoc:
         # Unfreeze name in case it's given as a frozen string
@@ -43,20 +44,31 @@ module Ibrain
         template "resolvers.erb", "#{options[:directory]}/resolvers/#{file_name}.rb"
         template "aggregate.erb", "#{options[:directory]}/resolvers/#{file_name}_aggregate.rb"
 
-        sentinel = /class .*QueryType\s*<\s*[^\s]+?\n/m
         in_root do
           gsub_file "#{options[:directory]}/types/query_type.rb", /  \# TODO: Add Resolvers as fields\s*\n/m, ""
-          inject_into_file "#{options[:directory]}/types/query_type.rb", "    field :#{field_name}, resolver: Resolvers::#{resolver_name}\n    field :#{field_name}_aggregate, resolver: Resolvers::#{resolver_name}Aggregate\n\n", after: sentinel, verbose: false, force: false
+          inject_into_file "#{options[:directory]}/types/query_type.rb", "\n    field :#{field_name}, resolver: Resolvers::#{resolver_name}\n    field :#{field_name}_aggregate, resolver: Resolvers::#{resolver_name}Aggregate \n  ", before: "end\nend", verbose: true, force: true
         end
       end
 
       private
 
       def assign_names!(name)
-        @field_name = name.camelize.underscore
-        @resolver_name = name.camelize(:upper)
-        @file_name = name.camelize.underscore
-        @model_name = options[:model].blank? ? 'Post' : options[:model].capitalize
+        underscore_name = name&.camelize&.underscore
+        prefix = options[:prefix].try(:underscore)
+
+        @model_name = options[:model].blank? ? 'Post' : options[:model].try(:capitalize)
+
+        if prefix.blank?
+          @resolver_name = name.camelize(:upper)
+          @file_name = underscore_name
+          @field_name = underscore_name
+
+          return
+        end
+
+        @resolver_name = "#{prefix.try(:capitalize)}::#{name.camelize(:upper)}"
+        @file_name = "#{prefix}/#{underscore_name}"
+        @field_name = "#{prefix}_#{underscore_name}"
       end
     end
   end

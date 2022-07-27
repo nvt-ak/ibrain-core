@@ -9,11 +9,11 @@ module Resolvers
     # TODO: define return fields
     type Types::Objects::<%= model_name.capitalize %>Type, null: false
 
-    argument :id, ID, required: false, description: 'TODO: describe about this argument'
+    argument :id, ID, required: true, description: 'TODO: describe about this argument'
 
     # TODO: define resolve method
     def resolve(args)
-      <%= model_name.capitalize %>Repository.find args[:id]
+      <%= model_name.capitalize %>Repository.find(args)
     end
   end
 end

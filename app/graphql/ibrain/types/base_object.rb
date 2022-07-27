@@ -10,13 +10,7 @@ module Ibrain
 
       field_class ::Ibrain::Types::BaseField
 
-      def self.overridden_graphql_name(name = '')
-        to_s.demodulize.gsub('Type', '').singularize.classify.constantize.table_name
-      rescue StandardError
-        return to_s.demodulize if name.blank?
-
-        name
-      end
+      field :name, String, null: true
     end
   end
 end

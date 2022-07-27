@@ -26,10 +26,9 @@ module Ibrain
 
         template "resolver.erb", "#{options[:directory]}/resolvers/#{file_name}.rb"
 
-        sentinel = /class .*QueryType\s*<\s*[^\s]+?\n/m
         in_root do
           gsub_file "#{options[:directory]}/types/query_type.rb", /  \# TODO: Add Resolvers as fields\s*\n/m, ""
-          inject_into_file "#{options[:directory]}/types/query_type.rb", "    field :#{field_name}, resolver: Resolvers::#{resolver_name}\n\n", after: sentinel, verbose: false, force: false
+          inject_into_file "#{options[:directory]}/types/query_type.rb", "\n    field :#{field_name}, resolver: Resolvers::#{resolver_name} \n  ", before: "end\nend", verbose: true, force: true
         end
       end
     end

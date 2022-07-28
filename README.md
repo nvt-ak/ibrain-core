@@ -51,6 +51,10 @@ To generate graphql resolvers query to get users list
 ```bash
 bundle exec rails generate ibrain:graphql:resolvers users --model=User
 ```
+To generate graphql resolver, mutation with prefix folder
+```bash
+bundle exec rails generate ibrain:graphql:resolvers users --model=User --prefix=admin
+```
 For pagination please using aggregate body query, something like
 ```
 query users($offset: Int, $limit: Int, $filter: Filter) {

@@ -38,7 +38,7 @@ module Ibrain
         end
 
         if options[:model].present?
-          system("bundle exec rails generate ibrain:graphql:object #{options[:model].downcase}")
+          system("bundle exec rails generate ibrain:graphql:object #{options[:model].underscore}")
         end
 
         template "mutation.erb", "#{options[:directory]}/mutations/#{file_name}.rb"

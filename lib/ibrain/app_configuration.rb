@@ -53,6 +53,8 @@ module Ibrain
 
     preference :master_database, :string, default: 'primary'
 
+    preference :graphql_max_depth, :integer, default: 3
+
     def static_model_preferences
       @static_model_preferences ||= Ibrain::Preferences::StaticModelPreferences.new
     end

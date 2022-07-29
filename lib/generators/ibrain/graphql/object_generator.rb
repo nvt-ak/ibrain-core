@@ -77,7 +77,7 @@ module Ibrain
       end
 
       def model_name
-        type_name.capitalize
+        type_name.try(:camelize, :upper)
       end
 
       def klass

@@ -6,7 +6,7 @@ module Resolvers
     description 'Define aggregate to count total records for <%= resolver_name %>'
     # define resolve method
     def resolve(args)
-      <%= model_name.capitalize %>Repository.aggregate(args)
+      <%= model_name.try(:camelize, :upper) %>Repository.aggregate(args)
     end
   end
 end

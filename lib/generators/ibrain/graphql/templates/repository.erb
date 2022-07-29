@@ -12,7 +12,7 @@ class <%= model_name %>Repository < Ibrain::BaseRepository
     end
 
     def aggregate(args)
-      <%= model_name %>.ransack(args[:filter]).result
+      <%= model_name %>.ransack(args[:where]).result
     end
   end
 end

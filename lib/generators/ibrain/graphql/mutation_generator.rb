@@ -54,7 +54,7 @@ module Ibrain
       def assign_names!(name)
         underscore_name = name&.camelize&.underscore
         prefix = options[:prefix].try(:underscore)
-        @model_name = options[:model].blank? ? 'Post' : options[:model].try(:capitalize)
+        @model_name = options[:model].blank? ? 'Post' : options[:model].try(:camelize, :upper)
 
         if prefix.blank?
           @mutation_name = name.camelize(:upper)
@@ -64,7 +64,7 @@ module Ibrain
           return
         end
 
-        @mutation_name = "#{prefix.try(:capitalize)}::#{name.camelize(:upper)}"
+        @mutation_name = "#{prefix.try(:camelize, :upper)}::#{name.camelize(:upper)}"
         @file_name = "#{prefix}/#{underscore_name}"
         @field_name = "#{prefix}_#{underscore_name}"
       end

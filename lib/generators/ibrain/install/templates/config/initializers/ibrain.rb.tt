@@ -46,7 +46,10 @@ Ibrain.config do |config|
   # config.parent_controller = 'ActionController::API'
 
   # For multiple database
-  preference :master_database, :string, default: 'primary'
+  # config.preference = 'primary'
+
+  # For max depth graphql
+  config.graphql_max_depth = 3
 end
 
 <% if defined?(Ibrain::Api::Engine) -%>

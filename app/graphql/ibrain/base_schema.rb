@@ -3,7 +3,9 @@
 module Ibrain
   class BaseSchema < ::GraphQL::Schema
     use GraphQL::Batch
+
     max_depth Ibrain::Config.graphql_max_depth
+    query_analyzer(Ibrain::LogQueryDepth)
 
     # use GraphQL::Guard.new(
     #   policy_object: ::Ibrain::Config.graphql_policy.safe_constantize,

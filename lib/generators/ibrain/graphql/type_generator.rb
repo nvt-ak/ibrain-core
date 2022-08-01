@@ -24,7 +24,7 @@ module Ibrain
       # @param mode [Symbol]
       # @param null [Boolean]
       # @return [(String, Boolean)] The type expression, followed by `null:` value
-      def self.normalize_type_expression(type_expression, mode:, null: true)
+      def self.normalize_type_expression(type_expression, mode:, null: false)
         if type_expression.start_with?("!")
           normalize_type_expression(type_expression[1..-1], mode: mode, null: false)
         elsif type_expression.end_with?("!")

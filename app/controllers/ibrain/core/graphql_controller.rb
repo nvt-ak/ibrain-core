@@ -23,7 +23,8 @@ module Ibrain
             controller: self,
             request: request
           },
-          operation_name: operation_name
+          operation_name: operation_name,
+          max_depth: max_depth(operation_name)
         )
 
         render_json_ok(result['data'], nil, result['errors'])
@@ -92,6 +93,10 @@ module Ibrain
         return if request.env['devise.mapping'].present?
 
         request.env['devise.mapping'] = Ibrain.user_class
+      end
+
+      def max_depth(operation_name)
+        operation_name == 'IntrospectionQuery' ? 100 : Ibrain::Config.graphql_max_depth
       end
     end
   end

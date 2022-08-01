@@ -77,6 +77,7 @@ module Ibrain
         append_gem('graphql-guard', '2.0.0')
         append_gem('graphql-rails-generators', '1.1.2', 'development')
         append_gem('graphiql-rails', '1.8.0', 'development')
+        append_gem('apollo_upload_server', '2.1')
       end
 
       append_gem('annotate', '3.1.1', 'development') if options[:with_annotation]

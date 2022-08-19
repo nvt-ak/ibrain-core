@@ -11,6 +11,16 @@ module Ibrain
       field_class ::Ibrain::Types::BaseField
 
       field :name, String, null: true
+
+      protected
+
+      def loader
+        Ibrain::Loaders::AssociationLoader
+      end
+
+      def current_user
+        context.try(:fetch, :current_user)
+      end
     end
   end
 end

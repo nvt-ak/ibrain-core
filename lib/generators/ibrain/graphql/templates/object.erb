@@ -3,7 +3,7 @@
 <% module_namespacing_when_supported do -%>
 module Types
   module Objects
-    class <%= type_ruby_name.split('::')[-1] %> < Ibrain::Types::BaseObject
+    class <%= type_ruby_name.split('::')[-1] %> < Ibrain::Types::BaseType
       implements Ibrain::Interfaces::RecordInterface
 
       description '<%= type_ruby_name.split('::')[-1] %>'

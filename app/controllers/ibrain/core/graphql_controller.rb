@@ -96,7 +96,7 @@ module Ibrain
       end
 
       def max_depth(operation_name)
-        operation_name == 'IntrospectionQuery' ? 100 : Ibrain::Config.graphql_max_depth
+        operation_name == 'IntrospectionQuery' ? nil : Ibrain::Config.graphql_max_depth
       end
     end
   end

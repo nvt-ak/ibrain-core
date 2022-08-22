@@ -25,6 +25,7 @@ module Ibrain
         end
 
         template "resolver.erb", "#{options[:directory]}/resolvers/#{file_name}.rb"
+        return unless ::Ibrain::Config.is_auto_append_mutation
 
         in_root do
           gsub_file "#{options[:directory]}/types/query_type.rb", /  \# TODO: Add Resolvers as fields\s*\n/m, ""

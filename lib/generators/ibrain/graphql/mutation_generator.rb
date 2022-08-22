@@ -42,6 +42,7 @@ module Ibrain
         end
 
         template "mutation.erb", "#{options[:directory]}/mutations/#{file_name}.rb"
+        return unless ::Ibrain::Config.is_auto_append_mutation
 
         in_root do
           gsub_file "#{options[:directory]}/types/mutation_type.rb", /  \# TODO: Add Mutations as fields\s*\n/m, ""

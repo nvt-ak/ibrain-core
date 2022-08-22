@@ -55,6 +55,8 @@ module Ibrain
 
     preference :graphql_max_depth, :integer, default: 3
 
+    preference :is_auto_append_mutation, :boolean, default: true
+
     def static_model_preferences
       @static_model_preferences ||= Ibrain::Preferences::StaticModelPreferences.new
     end

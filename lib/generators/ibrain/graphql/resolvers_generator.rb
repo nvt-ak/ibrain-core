@@ -43,6 +43,7 @@ module Ibrain
 
         template "resolvers.erb", "#{options[:directory]}/resolvers/#{file_name}.rb"
         template "aggregate.erb", "#{options[:directory]}/resolvers/#{file_name}_aggregate.rb"
+        return unless ::Ibrain::Config.is_auto_append_mutation
 
         in_root do
           gsub_file "#{options[:directory]}/types/query_type.rb", /  \# TODO: Add Resolvers as fields\s*\n/m, ""

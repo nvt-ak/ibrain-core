@@ -50,6 +50,9 @@ Ibrain.config do |config|
 
   # For max depth graphql
   config.graphql_max_depth = 3
+
+  # For auto append mutation to graphql
+  config.is_auto_append_mutation = true
 end
 
 <% if defined?(Ibrain::Api::Engine) -%>

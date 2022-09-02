@@ -7,16 +7,37 @@ module Mutations
     # description
 
     # TODO: define return fields
-    field :<%= model_name.underscore %>, Types::Objects::<%= model_name %>Type, null: false, description: 'Record Type for mutation response'
+    field :returning, Types::Objects::<%= model_name %>Type, null: true, description: 'Record Type for mutation response'
 
     # TODO: define arguments
     # argument :name, String, required: true
-    # argument :<%= model_name.underscore %>, Types::Attributes::<%= model_name %>Input, required: true
+    argument :attributes, Types::Attributes::<%= model_name %>Input, required: true
+    # argument :id, ID, required: true
 
     # TODO: define resolve method
     def resolve(args)
       # TODO: define logic inside repository
-      # Something like Repository.new(current_user, Post.new).create(args)
+      # Something like
+      # if resource.blank?
+      #   raise GraphQL::ExecutionError, I18n.t("activerecord.errors.models.job.attributes.id.could_not_find")
+      # end
+
+      # repo.update(normalize_parameters)
+      graphql_return
+    end
+
+    private
+
+    def normalize_parameters
+      # attribute_params.permit(:name, :status)
+    end
+
+    def load_resource
+      # <%= model_name %>.find_by(id: id_from_params)
+    end
+
+    def repo
+      # <%= model_name %>Repository.new(current_user, resource)
     end
   end
 end

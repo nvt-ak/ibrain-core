@@ -11,13 +11,17 @@ module Ibrain
       argument :attribute, Types::AttributeType, required: false
       argument :attributes, [Types::AttributeType], required: false
 
-      def resolve(args)
-        @params = ::ActionController::Parameters.new(args)
+      def ready?(args)
+        @params = ActionController::Parameters.new(
+          args.to_h.with_indifferent_access.transform_keys(&:underscore)
+        )
+        @resource = load_resource
+        true
       end
 
       protected
 
-      attr_reader :params
+      attr_reader :params, :resource
 
       def upload_permitted
         %i[content_type headers original_filename tempfile]
@@ -41,6 +45,28 @@ module Ibrain
 
       def request
         context[:request]
+      end
+
+      def graphql_return
+        {
+          returning: resource.reload
+        }
+      end
+
+      def success_response
+        {
+          success: true
+        }
+      end
+
+      def id_from_params
+        params[:id]
+      end
+
+      def attribute_params
+        params[:attributes].to_params
+      rescue StandardError
+        ActionController::Parameters.new({})
       end
     end
   end

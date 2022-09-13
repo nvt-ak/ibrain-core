@@ -10,7 +10,6 @@ require 'activerecord/session_store'
 
 require 'awesome_nested_set'
 require 'cancan'
-require 'friendly_id'
 require 'kaminari/activerecord'
 require 'rack/cors'
 require 'ransack'

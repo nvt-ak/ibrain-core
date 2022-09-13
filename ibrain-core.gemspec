@@ -21,7 +21,6 @@ Gem::Specification.new do |spec|
   spec.add_dependency "awesome_nested_set"
   spec.add_dependency "cancancan"
   spec.add_dependency 'discard'
-  spec.add_dependency "friendly_id"
   spec.add_dependency "gem-release"
   spec.add_dependency "kaminari"
   spec.add_dependency 'puma'

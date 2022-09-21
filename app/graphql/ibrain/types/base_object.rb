@@ -9,8 +9,7 @@ module Ibrain
       connection_type_class(Ibrain::Types::BaseConnection)
 
       field_class ::Ibrain::Types::BaseField
-
-      field :name, String, null: true
+      field :table_name, String, null: true
 
       protected
 
@@ -20,6 +19,10 @@ module Ibrain
 
       def current_user
         context.try(:fetch, :current_user)
+      end
+
+      def table_name
+        object.class.try(:table_name)
       end
     end
   end

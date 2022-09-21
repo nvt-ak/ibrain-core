@@ -3,10 +3,12 @@
 module Ibrain
   module Types
     class BaseType < BaseObject
-      def self.graphql_name(name = "")
-        return name if name.present?
+      class << self
+        def graphql_name(name = "")
+          return name if name.present?
 
-        self.name.demodulize.gsub('Type', '').classify.constantize.table_name
+          self.name.demodulize.gsub('Type', '').classify.constantize.table_name
+        end
       end
     end
   end

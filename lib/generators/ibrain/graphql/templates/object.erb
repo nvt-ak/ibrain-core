@@ -1,15 +1,12 @@
 # frozen_string_literal: true
 
 <% module_namespacing_when_supported do -%>
-module Types
-  module Objects
-    class <%= type_ruby_name.split('::')[-1] %> < Ibrain::Types::BaseType
-      implements Ibrain::Interfaces::RecordInterface
+class Types::Objects::<%= type_ruby_name.split('::')[-1] %> < Ibrain::Types::BaseObject
+  implements Ibrain::Interfaces::RecordInterface
 
-      description '<%= type_ruby_name.split('::')[-1] %>'
-      
-    <% normalized_fields.each do |f| %>  <%= f.to_ruby %>
-    <% end %>end
-  end
-end
+  description '<%= type_ruby_name.split('::')[-1] %>'
+  graphql_name <%= type_model_name %>.table_name
+  
+<% normalized_fields.each do |f| %>  <%= f.to_ruby %>
+<% end %>end
 <% end -%>

@@ -66,6 +66,10 @@ module Ibrain
         @type_ruby_name ||= self.class.normalize_type_expression(type_name, mode: :ruby)[0]
       end
 
+      def type_model_name
+        @type_model_name ||= type_name.camelize
+      end
+
       # @return [String] The user-provided type name, as a GraphQL name
       def type_graphql_name
         @type_graphql_name ||= self.class.normalize_type_expression(type_name, mode: :graphql)[0]

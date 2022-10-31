@@ -11,7 +11,7 @@ module Ibrain
         extension(Ibrain::Extentions::SessionRequired, session_required: session_required) if session_required
         extension(Ibrain::Extentions::Roles, roles: roles) if roles
 
-        if ::Ibrain.config.is_require_activated_account && active_required
+        if Ibrain::Config.is_require_activated_account && active_required
           extension(Ibrain::Extentions::ActiveRequired)
         end
       end

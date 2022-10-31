@@ -57,6 +57,8 @@ module Ibrain
 
     preference :is_auto_append_mutation, :boolean, default: true
 
+    preference :is_require_activated_account, :boolean, default: false
+
     def static_model_preferences
       @static_model_preferences ||= Ibrain::Preferences::StaticModelPreferences.new
     end

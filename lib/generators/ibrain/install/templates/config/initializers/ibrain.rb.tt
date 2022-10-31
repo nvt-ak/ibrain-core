@@ -53,6 +53,9 @@ Ibrain.config do |config|
 
   # For auto append mutation to graphql
   config.is_auto_append_mutation = true
+
+  # Enable require active
+  config.is_require_activated_account = false
 end
 
 <% if defined?(Ibrain::Api::Engine) -%>

@@ -24,6 +24,14 @@ module Ibrain
       def current_user
         context.try(:fetch, :current_user)
       end
+
+      def association_count_loader
+        Ibrain::Loaders::AssociationCountLoader
+      end
+
+      def count_loader
+        Ibrain::Loaders::CountLoader
+      end
     end
   end
 end

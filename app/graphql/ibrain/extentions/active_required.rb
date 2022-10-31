@@ -13,7 +13,8 @@ module Ibrain
       private
 
       def is_activated(object)
-        object.try(:context).try(:fetch, :current_user, nil).blank? && options.try(:fetch, :session_required, false)
+        current_user = object.try(:context).try(:fetch, :current_user, nil)
+        current_user.try(:is_activated?) && options.try(:fetch, :active_required, false)
       end
     end
   end

@@ -59,6 +59,9 @@ module Ibrain
 
     preference :is_require_activated_account, :boolean, default: false
 
+    # Enabled authorize resource by user
+    preference :authorize_resource_enabled_with_roles, :array, default: []
+
     def static_model_preferences
       @static_model_preferences ||= Ibrain::Preferences::StaticModelPreferences.new
     end

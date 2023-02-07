@@ -56,6 +56,9 @@ Ibrain.config do |config|
 
   # Enable require active
   config.is_require_activated_account = false
+
+  # Enabled authorize resource by user
+  config.authorize_resource_enabled_with_roles = %w[]
 end
 
 <% if defined?(Ibrain::Api::Engine) -%>

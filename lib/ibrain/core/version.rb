@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Ibrain
-  VERSION = "0.5.12"
+  VERSION = "0.5.13"
 
   def self.ibrain_version
     VERSION

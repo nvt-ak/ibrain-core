@@ -14,18 +14,46 @@ module Ibrain
       def execute
         query, variables, operation_name = normalize_entity
 
-        result = schema.execute(
-          query,
-          variables: variables,
-          context: {
-            session: session,
-            current_user: try_ibrain_current_user,
-            controller: self,
-            request: request
-          },
-          operation_name: operation_name,
-          max_depth: max_depth(operation_name)
-        )
+        is_mutation = query =~ /mutation #{operation_name}/
+        cache_key = "graphql-#{try_ibrain_current_user&.id}/#{request.headers.hash}-#{params.to_unsafe_h.hash}"
+        context = {
+          session: session,
+          current_user: try_ibrain_current_user,
+          controller: self,
+          request: request
+        }
+
+        exec_function = proc do |options|
+          schema.execute(
+            options[:query],
+            variables: options[:variables],
+            context: options[:context],
+            operation_name: options[:operation_name],
+            max_depth: options[:max_depth]
+          )
+        end
+
+        if is_mutation
+          result = exec_function.call({
+            query: query,
+            variables: variables,
+            context: context,
+            operation_name: operation_name,
+            max_depth: max_depth(operation_name)
+          })
+        else
+          result = Rails.cache.fetch(cache_key, expires_in: 10.minutes) do
+            result = exec_function.call({
+              query: query,
+              variables: variables,
+              context: context,
+              operation_name: operation_name,
+              max_depth: max_depth(operation_name)
+            })
+
+            result.to_h
+          end
+        end
 
         render_json_ok(result['data'], nil, result['errors'])
       end

@@ -21,7 +21,7 @@ module Ibrain
 
       def remove_device_token(object)
         request = object.try(:context).try(:fetch, :request, nil)
-        Ibrain.user_class.try(:remove_device_token, request)
+        Ibrain.user_class.try(:remove_device_token, request) if request
       end
     end
   end

@@ -5,7 +5,7 @@ module Ibrain
     class SessionRequired < GraphQL::Schema::FieldExtension
       def resolve(object:, arguments:, **rest)
         if is_invalid_session(object)
-          Device.find_by_token(device_token(object))&.destroy!
+          remove_device_token(object)
           raise ActionController::InvalidAuthenticityToken, I18n.t('ibrain.errors.session.invalid_session')
         end
 
@@ -19,8 +19,9 @@ module Ibrain
         object.try(:context).try(:fetch, :current_user, nil).blank? && options.try(:fetch, :session_required, false)
       end
 
-      def device_token(object)  
-        object.try(:context).try(:fetch, :request, nil).headers["Device-token"]
+      def remove_device_token(object)
+        request = object.try(:context).try(:fetch, :request, nil)
+        Ibrain.user_class.try(:remove_device_token, request)
       end
     end
   end
